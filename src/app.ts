@@ -1,10 +1,12 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { Request, Response, NextFunction, Router } from "express";
 import path from "path";
 import { json, urlencoded } from "body-parser";
 
 // import { combineRouters } from "./routes";
 import { appConfig } from "./config";
 import { take } from "./helpers";
+import { combineRouter } from "./routes";
+import { Route, getMetaData } from "./helpers/decorators";
 
 export class App {
   public app: express.Express;
@@ -17,30 +19,21 @@ export class App {
   }
 
   private middlewareHandler(): void {
-    this.app.all(
-      "/*",
-      (
-        req: Request,
-        res: Response,
-        next: NextFunction
-      ) => {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header(
-          "Access-Control-Allow-Methods",
-          "GET,PUT,POST,DELETE,OPTIONS"
-        );
-        res.header(
-          "Access-Control-Allow-Headers",
-          "Content-type,Accept,X-Access-Token,Authorization,X-Key"
-        );
-        if (req.method == "OPTIONS") {
-          res.status(200).end();
-        } else {
-          next();
-        }
-      }
-    );
-    // this.app.use(apiMiddleware({ version: appConfig.app.version, messages }));
+    this.app.all("/*", (req: Request, res: Response, next: NextFunction) => {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header(
+        "Access-Control-Allow-Methods",
+        "GET,PUT,POST,DELETE,OPTIONS"
+      );
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Content-type,Accept,X-Access-Token,Authorization,X-Key"
+      );
+
+      if (req.method == "OPTIONS") res.status(200).end();
+      else next();
+    });
+
     this.app.use(json({ limit: "50mb" }));
     this.app.use(urlencoded({ limit: "50mb", extended: true }));
     this.app.use(express.static(path.join(__dirname, "public")));
@@ -59,15 +52,37 @@ export class App {
       else next();
     });
 
-    // combineRouters(this.app);
+    this.combineRouterss();
+  }
+
+
+  private combineRouterss() {
+    combineRouter.forEach((instance: any) => {
+      const controllerInstance: any = new instance();
+      const metaData = getMetaData(controllerInstance);
+      const controllerPath = metaData.controller;
+      const routes = metaData.routes;
+
+      Object.keys(routes).forEach((methodName: string) => {
+        const router: any = Router();
+        const route: Route = routes[methodName];
+        const routeMethod = route.method;
+
+        router[routeMethod](route.url, async (req: Request, res: Response) => {
+          return controllerInstance[methodName](req, res);
+        });
+
+        this.app.use(controllerPath, router);
+      });
+    });
   }
 
   private errorHandler(): void {
-    // this.app.use(
-    //   (err: Error, _req: Request, res: Response, _next: NextFunction) => {
-    //     res.serverError(err);
-    //   }
-    // );
+    this.app.use(
+      (err: Error, _req: Request, res: Response, _next: NextFunction) => {
+        res.send(err);
+      }
+    );
 
     // catch 404 and forward to error handler
     // this.app.use((_: Request, res: Response) => {

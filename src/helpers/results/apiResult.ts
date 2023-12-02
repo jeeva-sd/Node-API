@@ -1,3 +1,4 @@
+import { Response } from "express";
 import { appConfig } from "../../config";
 import { MessageStatus, messages } from "./messages";
 import { ApiResult } from "./types";
@@ -31,6 +32,7 @@ export const exception = (error: string | any, data?: any): ApiResult => {
 };
 
 export const dataFound = (data: any): ApiResult => {
+
   return buildApiResult(1000, data);
 };
 
@@ -39,5 +41,5 @@ export const dataNotFound = (data: any = []): ApiResult => {
 };
 
 export const dataList = (data: any): ApiResult => {
-  return data && data.length > 0 ? dataFound(data) : dataNotFound();
+  return data && data.length > 0 ? null : dataNotFound();
 };
