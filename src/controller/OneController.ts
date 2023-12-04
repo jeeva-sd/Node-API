@@ -1,6 +1,11 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Controller, GET } from "../helpers/decorators";
 import One from "../core/one";
+
+const exampleMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.hasOwnProperty('page')) next();
+    else return res.send('No Query FOund')
+};
 
 @Controller("/one")
 class OneController {
@@ -9,7 +14,7 @@ class OneController {
         this.core = this.instance();
     }
 
-    @GET("/")
+    @GET("/", [exampleMiddleware])
     public register(req: Request, res: Response) {
         return this.core.getOne(req);
     }

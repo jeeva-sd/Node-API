@@ -68,7 +68,11 @@ export class App {
         const route: Route = routes[methodName];
         const routeMethod = route.method;
 
-        router[routeMethod](route.url, async (req: Request, res: Response) => {
+        // Check if middleware is defined for this route
+        const middleware = route.middleware || [];
+
+        // Apply middleware to the route
+        router[routeMethod](route.url, ...middleware, async (req: Request, res: Response) => {
           const response = controllerInstance[methodName](req, res);
 
           if (response instanceof Promise) return response.then((data: ApiResult) => res.send(data));
