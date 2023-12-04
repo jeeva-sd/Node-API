@@ -1,23 +1,21 @@
 import { Request, Response } from "express";
 import { Controller, GET } from "../helpers/decorators";
-import Antony from "../core/one";
+import One from "../core/one";
 
 @Controller("/one")
 class OneController {
-    private core: Antony;
+    private core: One;
     constructor() {
         this.core = this.instance();
     }
 
     @GET("/")
     public register(req: Request, res: Response) {
-        return this.core.login(req, res);
+        return this.core.getOne(req);
     }
 
     private instance() {
-        if (this.core) return this.core;
-        else this.core = new Antony();
-
+        if (!this.core) this.core = new One();
         return this.core;
     }
 }

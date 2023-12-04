@@ -1,20 +1,16 @@
-import { Request, Response } from "express";
-import { dataFound, dataList } from "../helpers";
-import { ResponseX } from "../helpers/decorators";
+import { Request } from "express";
+import { TryCatch, dataFound } from "../helpers";
 
+class One {
 
-class Antony {
-
-    @ResponseX()
-    public async login(_req: Request, _res: Response) {
-        const one = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+    @TryCatch()
+    public async getOne(req: Request) {
+        const { page } = req.query;
+        const one = await fetch(`https://jsonplaceholder.typicode.com/todos/${page}`)
             .then(response => response.json());
 
-        const two = await fetch('https://jsonplaceholder.typicode.com/todos/2')
-            .then(response => response.json());
-
-        return dataFound({ one, two });
+        return dataFound(one);
     }
 }
 
-export default Antony;
+export default One;

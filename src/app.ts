@@ -7,6 +7,7 @@ import { appConfig } from "./config";
 import { take } from "./helpers";
 import { combineRouter } from "./routes";
 import { Route, getMetaData } from "./helpers/decorators";
+import { ApiResult } from "./helpers/results/types";
 
 export class App {
   public app: express.Express;
@@ -55,7 +56,6 @@ export class App {
     this.combineRouterss();
   }
 
-
   private combineRouterss() {
     combineRouter.forEach((instance: any) => {
       const controllerInstance: any = new instance();
@@ -69,7 +69,10 @@ export class App {
         const routeMethod = route.method;
 
         router[routeMethod](route.url, async (req: Request, res: Response) => {
-          return controllerInstance[methodName](req, res);
+          const response = controllerInstance[methodName](req, res);
+
+          if (response instanceof Promise) return response.then((data: ApiResult) => res.send(data));
+          else res.send(response);
         });
 
         this.app.use(controllerPath, router);
