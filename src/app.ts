@@ -61,6 +61,7 @@ export class App {
       const controllerInstance: any = new instance();
       const metaData = getMetaData(controllerInstance);
       const controllerPath = metaData.controller;
+      const controllerMiddleware = metaData.controllerMiddleware || [];
       const routes = metaData.routes;
 
       Object.keys(routes).forEach((methodName: string) => {
@@ -69,10 +70,13 @@ export class App {
         const routeMethod = route.method;
 
         // Check if middleware is defined for this route
-        const middleware = route.middleware || [];
+        const routeMiddleware = route.middleware || [];
 
-        // Apply middleware to the route
-        router[routeMethod](route.url, ...middleware, async (req: Request, res: Response) => {
+        // Apply controller-level middleware
+        router.use(...controllerMiddleware);
+
+        // Apply route-level middleware to the route
+        router[routeMethod](route.url, ...routeMiddleware, async (req: Request, res: Response) => {
           const response = controllerInstance[methodName](req, res);
 
           if (response instanceof Promise) return response.then((data: ApiResult) => res.send(data));

@@ -7,14 +7,14 @@ const exampleMiddleware = (req: Request, res: Response, next: NextFunction) => {
     else return res.send('No Query FOund')
 };
 
-@Controller("/one")
+@Controller("/one", [exampleMiddleware])
 class OneController {
     private core: One;
     constructor() {
         this.core = this.instance();
     }
 
-    @GET("/", [exampleMiddleware])
+    @GET("/")
     public register(req: Request, res: Response) {
         return this.core.getOne(req);
     }

@@ -6,6 +6,7 @@ export interface Route {
 
 export interface MetaData {
     controller: string;
+    controllerMiddleware: any;
     routes: {
         [key: string]: Route;
     };
@@ -19,6 +20,7 @@ export const getMetaData = (target: TargetData): MetaData => {
     if (!target.meta_data) {
         target.meta_data = {
             controller: '',
+            controllerMiddleware: [],
             routes: {},
         };
     }

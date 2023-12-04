@@ -1,21 +1,22 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, Router } from 'express';
 import { getMetaData } from './meta';
 import { exception } from '../results';
 
-// Define a new type for middleware functions
 type MiddlewareFunction = (req: Request, res: Response, next: NextFunction) => void;
 
-// Define a key for storing middleware in metadata
-const MIDDLEWARE_KEY = '__middleware__';
-
-export const Controller = (controller: string): ClassDecorator => {
+export const Controller = (controller: string, middleware?: MiddlewareFunction[]): ClassDecorator => {
   return (target: any) => {
     const meta = getMetaData(target.prototype);
     meta.controller = controller;
+    meta.controllerMiddleware = middleware || [];
   };
 };
 
-export const MethodDecorator = (method: string, path: string, middleware?: MiddlewareFunction[]): MethodDecorator => {
+export const MethodDecorator = (
+  method: string,
+  path: string,
+  middleware?: MiddlewareFunction[]
+): MethodDecorator => {
   return (target: any, methodName: string, descriptor: PropertyDescriptor) => {
     const meta = getMetaData(target);
     meta.routes[methodName] = { method, url: path, middleware };
@@ -23,12 +24,15 @@ export const MethodDecorator = (method: string, path: string, middleware?: Middl
   };
 };
 
-export const GET = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('get', path, middleware);
-export const POST = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('post', path, middleware);
-export const PUT = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('put', path, middleware);
-export const DELETE = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('delete', path, middleware);
+export const GET = (path: string, middleware?: MiddlewareFunction[]) =>
+  MethodDecorator('get', path, middleware);
+export const POST = (path: string, middleware?: MiddlewareFunction[]) =>
+  MethodDecorator('post', path, middleware);
+export const PUT = (path: string, middleware?: MiddlewareFunction[]) =>
+  MethodDecorator('put', path, middleware);
+export const DELETE = (path: string, middleware?: MiddlewareFunction[]) =>
+  MethodDecorator('delete', path, middleware);
 
-// Custom Response 
 export function ResponseX() {
   return (_target: any, _propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value;
