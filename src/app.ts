@@ -53,10 +53,10 @@ export class App {
       else next();
     });
 
-    this.combineRouterss();
+    this.createRoutes();
   }
 
-  private combineRouterss() {
+  private createRoutes() {
     combineRouter.forEach((instance: any) => {
       const controllerInstance: any = new instance();
       const metaData = getMetaData(controllerInstance);
@@ -64,23 +64,30 @@ export class App {
       const controllerMiddleware = metaData.controllerMiddleware || [];
       const routes = metaData.routes;
 
+
       Object.keys(routes).forEach((methodName: string) => {
         const router: any = Router();
         const route: Route = routes[methodName];
         const routeMethod = route.method;
 
+        console.log(route, 'route');
+
         // Check if middleware is defined for this route
         const routeMiddleware = route.middleware || [];
 
-        // Apply controller-level middleware
-        router.use(...controllerMiddleware);
+        if (controllerMiddleware?.length > 0) {
+          // Apply controller-level middleware
+          router.use(...controllerMiddleware);
+        }
 
         // Apply route-level middleware to the route
         router[routeMethod](route.url, ...routeMiddleware, async (req: Request, res: Response) => {
           const response = controllerInstance[methodName](req, res);
 
-          if (response instanceof Promise) return response.then((data: ApiResult) => res.send(data));
-          else res.send(response);
+          if (!route?.customResponse) {
+            if (response instanceof Promise) return response.then((data: ApiResult) => res.send(data));
+            else res.send(response);
+          }
         });
 
         this.app.use(controllerPath, router);

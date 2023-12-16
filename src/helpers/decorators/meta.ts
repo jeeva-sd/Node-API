@@ -1,7 +1,8 @@
 export interface Route {
     method: string;
     url: string;
-    middleware?: any
+    middleware?: any;
+    customResponse?: boolean;
 }
 
 export interface MetaData {
@@ -25,4 +26,4 @@ export const getMetaData = (target: TargetData): MetaData => {
         };
     }
     return target.meta_data;
-}
+};

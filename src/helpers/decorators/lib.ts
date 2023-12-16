@@ -19,7 +19,15 @@ export const MethodDecorator = (
 ): MethodDecorator => {
   return (target: any, methodName: string, descriptor: PropertyDescriptor) => {
     const meta = getMetaData(target);
-    meta.routes[methodName] = { method, url: path, middleware };
+    meta.routes[methodName] = { ...meta.routes[methodName], method, url: path, middleware };
+    return descriptor;
+  };
+};
+
+export const CustomMethodDecorator = (): MethodDecorator => {
+  return (target: any, methodName: string, descriptor: PropertyDescriptor) => {
+    const meta = getMetaData(target);
+    meta.routes[methodName] = { ...meta.routes[methodName], customResponse: true };
     return descriptor;
   };
 };
@@ -32,6 +40,8 @@ export const PUT = (path: string, middleware?: MiddlewareFunction[]) =>
   MethodDecorator('put', path, middleware);
 export const DELETE = (path: string, middleware?: MiddlewareFunction[]) =>
   MethodDecorator('delete', path, middleware);
+
+export const CUSTOM_RESPONSE = () => CustomMethodDecorator();
 
 export function ResponseX() {
   return (_target: any, _propertyKey: string, descriptor: PropertyDescriptor) => {
