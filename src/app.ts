@@ -58,9 +58,9 @@ export class App {
   }
 
   private combineRoutes() {
-    combineRouter.forEach((controller) => {
-      const router: any = Router();
-      const controllerInstance: any = new controller();
+    this.app.use('/api', combineRouter.map((Controller) => {
+      const router: any = express.Router();
+      const controllerInstance: any = new Controller();
       const metaData = getMetaData(controllerInstance);
 
       const controllerMiddleware = metaData.controllerMiddleware || [];
@@ -74,7 +74,9 @@ export class App {
         const route: Route = routes[methodName];
         const routeMethod = route.method;
         const routeMiddleware = route?.middleware || [];
-        router[routeMethod](route.url, ...routeMiddleware, async (req: Request, res: Response) => {
+
+        // Use router[routeMethod] instead of router.use
+        router[routeMethod](controllerPath + route.url, ...routeMiddleware, async (req: Request, res: Response) => {
           try {
             const response = controllerInstance[methodName](req, res);
 
@@ -89,11 +91,12 @@ export class App {
             res.status(500).send(exception(error));
           }
         });
-
-        this.app.use('/api' + controllerPath, router);
       });
-    });
+
+      return router;
+    }));
   }
+
 
   private errorHandler(): void {
     // catch 404 and forward to error handler
