@@ -1,7 +1,7 @@
 import { ExtendedConfig } from "./types";
 
 export const fallbackEnvs: ExtendedConfig = {
-    VERSION: 'v1',
+    VERSION: 'v1.0.0',
     APP_NAME: 'Express-E',
     PORT: 4000,
     NODE_ENV: 'local',

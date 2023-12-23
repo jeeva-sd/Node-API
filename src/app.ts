@@ -28,10 +28,7 @@ export class App {
       res.header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Access-Token, Authorization, X-Key");
 
       // Handle preflight requests
-      if (req.method === "OPTIONS") {
-        return res.status(200).end();
-      }
-
+      if (req.method === "OPTIONS") return res.status(200).end();
       next();
     });
 
@@ -43,10 +40,9 @@ export class App {
   private routeHandler(): void {
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       if (req.url === "/") {
-        res.send(take(200, {
-          env: appConfig.app.NODE_ENV,
-          name: appConfig.app.APP_NAME,
-        }));
+        const { NODE_ENV, APP_NAME } = appConfig.app;
+        const response = take(200, { name: APP_NAME, env: NODE_ENV });
+        res.send(response);
       }
       else next();
     });
@@ -54,10 +50,9 @@ export class App {
     this.combineRoutes();
   }
 
-  private combineRoutes() {
+  private combineRoutes(): void {
     this.app.use('/api', applicationRoutes);
   }
-
 
   private errorHandler(): void {
     // catch 404 and forward to error handler
