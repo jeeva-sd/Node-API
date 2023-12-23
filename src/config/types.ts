@@ -35,13 +35,17 @@ interface JwtCredential {
   JWT_ID_EXPIRATION_DAYS: number;
 }
 
+interface GeneralConfig {
+  ALLOWED_DOMAINS: string;
+}
 export interface AppConfig {
   app: AppCredential;
   jwt: JwtCredential;
   crypto: CryptoCredential;
   dbConnections: DbConnectionConfig;
+  general: GeneralConfig;
 };
 
 export interface ExtendedConfig
   extends AppCredential, DbConnectionConfig,
-  CryptoCredential, JwtCredential { }
+  CryptoCredential, JwtCredential, GeneralConfig { }

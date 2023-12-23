@@ -25,4 +25,6 @@ export const fallbackEnvs: ExtendedConfig = {
     DB_CONNECTION_LIMIT: 20,
     DB_IS_MULTIPLE_STATEMENT: true,
     DB_SHOULD_WAIT_FOR_CONNECTIONS: false,
+
+    ALLOWED_DOMAINS: 'http://localhost:3000'
 };

@@ -32,7 +32,6 @@ export const exception = (error: string | any, data?: any): ApiResult => {
 };
 
 export const dataFound = (data: any): ApiResult => {
-
   return buildApiResult(1000, data);
 };
 
@@ -41,5 +40,5 @@ export const dataNotFound = (data: any = []): ApiResult => {
 };
 
 export const dataList = (data: any): ApiResult => {
-  return data && data.length > 0 ? null : dataNotFound();
+  return data && data.length > 0 ? dataFound(data) : dataNotFound();
 };

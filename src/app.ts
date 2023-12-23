@@ -1,13 +1,12 @@
 import express, { Request, Response, NextFunction, Router } from "express";
-import path from "path";
 import { json, urlencoded } from "body-parser";
+import path from "path";
 
-// import { combineRouters } from "./routes";
-import { appConfig } from "./config";
-import { take } from "./helpers";
+import { exception, take } from "./helpers";
 import { combineRouter } from "./routes";
 import { Route, getMetaData } from "./helpers/decorators";
 import { ApiResult } from "./helpers/results/types";
+import { appConfig } from "./config";
 
 export class App {
   public app: express.Express;
@@ -15,24 +14,28 @@ export class App {
   constructor() {
     this.app = express();
     this.middlewareHandler();
-    this.routesHandler();
+    this.routeHandler();
     this.errorHandler();
   }
 
   private middlewareHandler(): void {
     this.app.all("/*", (req: Request, res: Response, next: NextFunction) => {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header(
-        "Access-Control-Allow-Methods",
-        "GET,PUT,POST,DELETE,OPTIONS"
-      );
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Content-type,Accept,X-Access-Token,Authorization,X-Key"
-      );
+      // For CORS
+      // const origin: string = req.headers.origin;
+      // const allowedDomains: string[] = appConfig.general.ALLOWED_DOMAINS.split(',');
+      // if (allowedDomains.includes(origin)) res.header("Access-Control-Allow-Origin", origin);
+      // else return res.status(403).send(take(403));
 
-      if (req.method == "OPTIONS") res.status(200).end();
-      else next();
+      res.header("Access-Control-Allow-Origin", '*');
+      res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
+      res.header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Access-Token, Authorization, X-Key");
+
+      // Handle preflight requests
+      if (req.method === "OPTIONS") {
+        return res.status(200).end();
+      }
+
+      next();
     });
 
     this.app.use(json({ limit: "50mb" }));
@@ -40,76 +43,68 @@ export class App {
     this.app.use(express.static(path.join(__dirname, "public")));
   }
 
-  private routesHandler(): void {
-    this.app.use((req: Request, res: express.Response, next: NextFunction) => {
+  private routeHandler(): void {
+    this.app.use((req: Request, res: Response, next: NextFunction) => {
       if (req.url === "/") {
-        const appInfo = {
+        res.send(take(200, {
           env: appConfig.app.NODE_ENV,
           name: appConfig.app.APP_NAME,
-        };
-
-        res.send(take(200, appInfo));
+        }));
       }
       else next();
     });
 
-    this.createRoutes();
+    this.combineRoutes();
   }
 
-  private createRoutes() {
-    combineRouter.forEach((instance: any) => {
-      const controllerInstance: any = new instance();
+  private combineRoutes() {
+    combineRouter.forEach((controller) => {
+      const router: any = Router();
+      const controllerInstance: any = new controller();
       const metaData = getMetaData(controllerInstance);
-      const controllerPath = metaData.controller;
+
       const controllerMiddleware = metaData.controllerMiddleware || [];
+      const controllerPath = metaData.controller;
       const routes = metaData.routes;
 
+      // Apply route-level middleware
+      if (controllerMiddleware?.length > 0) router.use(...controllerMiddleware);
 
       Object.keys(routes).forEach((methodName: string) => {
-        const router: any = Router();
         const route: Route = routes[methodName];
         const routeMethod = route.method;
-
-        console.log(route, 'route');
-
-        // Check if middleware is defined for this route
-        const routeMiddleware = route.middleware || [];
-
-        if (controllerMiddleware?.length > 0) {
-          // Apply controller-level middleware
-          router.use(...controllerMiddleware);
-        }
-
-        // Apply route-level middleware to the route
+        const routeMiddleware = route?.middleware || [];
         router[routeMethod](route.url, ...routeMiddleware, async (req: Request, res: Response) => {
-          const response = controllerInstance[methodName](req, res);
+          try {
+            const response = controllerInstance[methodName](req, res);
 
-          if (!route?.customResponse) {
-            if (response instanceof Promise) return response.then((data: ApiResult) => res.send(data));
-            else res.send(response);
+            if (route.hasOwnProperty('customResponse')) return null;
+            if (!(response instanceof Promise)) return res.send(response);
+
+            response.then((data: ApiResult) => {
+              if (data.code === 400) return res.status(400).send(data);
+              return res.send(data);
+            });
+          } catch (error) {
+            res.status(500).send(exception(error));
           }
         });
 
-        this.app.use(controllerPath, router);
+        this.app.use('/api' + controllerPath, router);
       });
     });
   }
 
   private errorHandler(): void {
-    this.app.use(
-      (err: Error, _req: Request, res: Response, _next: NextFunction) => {
-        res.send(err);
-      }
-    );
-
     // catch 404 and forward to error handler
-    // this.app.use((_: Request, res: Response) => {
-    //   res.apiNotFound();
-    // });
+    this.app.use('*', (req: Request, res: Response) => {
+      const notFoundResponse = take(404, `${req.originalUrl} not found!`);
+      res.status(404).send(notFoundResponse);
+    });
 
     // handle unexpected errors
     process.on("uncaughtException", (err: any) => {
-      console.log(err);
+      console.info(err);
     });
   }
 }
