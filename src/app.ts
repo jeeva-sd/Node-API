@@ -5,6 +5,13 @@ import { take } from "./helpers";
 import { appConfig } from "./config";
 import { applicationRoutes } from "./routes";
 
+declare global {
+  namespace Express {
+    interface Request {
+      parameters?: any;
+    }
+  }
+}
 export class App {
   public app: express.Express;
 
@@ -44,7 +51,10 @@ export class App {
         const response = take(200, { name: APP_NAME, env: NODE_ENV });
         res.send(response);
       }
-      else next();
+
+      // Grouping parameters
+      req.parameters = { ...req.query, ...req.body };
+      next();
     });
 
     this.combineRoutes();

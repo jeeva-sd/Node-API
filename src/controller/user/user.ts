@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { Controller, GET } from "../../helpers";
 import UserCore from "../../core/user";
+import { validate } from "../../middleware";
+import { userList } from "./userHandler";
 
 @Controller("/user")
 class UserController {
@@ -10,9 +12,9 @@ class UserController {
         this.core = this.instance();
     }
 
-    @GET("/list")
-    public userList(req: Request, res: Response) {
-        return this.core.userList();
+    @GET("/list", [validate(userList)])
+    public userList(req: Request) {
+        return this.core.userList(req.parameters);
     }
 
     private instance() {
