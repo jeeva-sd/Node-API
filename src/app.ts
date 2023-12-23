@@ -53,7 +53,7 @@ export class App {
       }
 
       // Grouping parameters
-      req.parameters = { ...req.query, ...req.body };
+      req.parameters = { ...req.query, ...req.body, ...req.params };
       next();
     });
 
