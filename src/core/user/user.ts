@@ -1,17 +1,16 @@
-import { TryCatch, dataFound, dataList, jsonHttp } from "../../helpers";
+import { GUARD, dataFound, jsonHttp } from "../../helpers";
 
 class UserCore {
 
-    @TryCatch()
+    @GUARD()
     public async userList(params: any) {
         const userResponse = await jsonHttp.get(`/users`);
         return dataFound(userResponse);
     }
 
-    @TryCatch()
+    @GUARD()
     public async userById(params: any) {
-        console.log(params, 'params');
-        const userResponse = await jsonHttp.get(`/users/4`); //${params.userId}
+        const userResponse = await jsonHttp.get(`/users/4`);
         return dataFound(userResponse);
     }
 }

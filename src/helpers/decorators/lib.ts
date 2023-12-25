@@ -4,7 +4,7 @@ import { exception } from '../results';
 
 type MiddlewareFunction = (req: Request, res: Response, next: NextFunction) => void;
 
-export const Controller = (controller: string, middleware?: MiddlewareFunction[]): ClassDecorator => {
+export const CONTROLLER = (controller: string, middleware?: MiddlewareFunction[]): ClassDecorator => {
   return (target: any) => {
     const meta = getMetaData(target.prototype);
     meta.controller = controller;
@@ -61,7 +61,7 @@ export function ResponseX() {
   };
 }
 
-export function TryCatch() {
+export function GUARD() {
   return function (_target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
 
