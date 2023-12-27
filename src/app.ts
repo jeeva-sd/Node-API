@@ -8,10 +8,11 @@ import { applicationRoutes } from "./routes";
 declare global {
   namespace Express {
     interface Request {
-      parameters?: any;
+      parameters?: Record<string, any>;
     }
   }
 }
+
 export class App {
   public app: express.Express;
 
@@ -49,7 +50,7 @@ export class App {
       if (req.url === "/") {
         const { NODE_ENV, APP_NAME } = appConfig.app;
         const response = take(200, { name: APP_NAME, env: NODE_ENV });
-        res.send(response);
+        return res.send(response);
       }
 
       // Grouping parameters
@@ -72,8 +73,8 @@ export class App {
     });
 
     // handle unexpected errors
-    process.on("uncaughtException", (err: any) => {
-      console.info(err);
+    process.on("uncaughtException", (err: Error) => {
+      console.error(err);
     });
   }
 }

@@ -10,7 +10,7 @@ class UserCore {
 
     @GUARD()
     public async userById(params: any) {
-        const userResponse = await jsonHttp.get(`/users/4`);
+        const userResponse = await jsonHttp.get(`/users/${params.userId}`);
         return dataFound(userResponse);
     }
 }
