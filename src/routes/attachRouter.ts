@@ -30,7 +30,7 @@ const attachRouter = (appRoutes: any[]) => {
                     if (!(response instanceof Promise)) return res.send(response);
 
                     response.then((data: ApiResult) => {
-                        if (data.code === 400) return res.status(400).send(data);
+                        if (data.status !== 'success') return res.status(400).send(data);
                         return res.send(data);
                     });
                 } catch (error) {
