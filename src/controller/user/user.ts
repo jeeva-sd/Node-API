@@ -2,7 +2,7 @@ import { Request } from "express";
 import { Controller, GET } from "../../helpers";
 import UserCore from "../../core/user";
 import { validate } from "../../middleware";
-import { userById } from "./userHandler";
+import { userById } from "./schema";
 
 @Controller("/user")
 class UserController {
