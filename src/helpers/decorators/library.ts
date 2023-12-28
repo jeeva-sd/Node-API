@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
-import { getMetaData } from './meta';
+import { MetaData, TargetData } from './type';
 import { extractErrorMessage, serverError } from '../results/apiResult';
 
 // Define a type for middleware functions
 type MiddlewareFunction = (req: Request, res: Response, next: NextFunction) => void;
 
 // Controller decorator
-export const controller = (controller: string, middleware?: MiddlewareFunction[]): ClassDecorator => {
+export const Controller = (controller: string, middleware?: MiddlewareFunction[]): ClassDecorator => {
   return (target: any) => {
-    const meta = getMetaData(target.prototype);
+    const meta = GetMetaData(target.prototype);
     meta.controller = controller;
     meta.controllerMiddleware = middleware || [];
   };
@@ -17,7 +17,7 @@ export const controller = (controller: string, middleware?: MiddlewareFunction[]
 // Method decorator for defining routes
 export const MethodDecorator = (method: string, path: string, middleware?: MiddlewareFunction[]): MethodDecorator => {
   return (target: any, methodName: string, descriptor: PropertyDescriptor) => {
-    const meta = getMetaData(target);
+    const meta = GetMetaData(target);
     meta.routes[methodName] = { ...meta.routes[methodName], method, url: path, middleware };
     return descriptor;
   };
@@ -26,7 +26,7 @@ export const MethodDecorator = (method: string, path: string, middleware?: Middl
 // Custom method decorator for indicating custom response handling
 export const CustomMethodDecorator = (): MethodDecorator => {
   return (target: any, methodName: string, descriptor: PropertyDescriptor) => {
-    const meta = getMetaData(target);
+    const meta = GetMetaData(target);
     meta.routes[methodName] = { ...meta.routes[methodName], customResponse: true };
     return descriptor;
   };
@@ -42,7 +42,7 @@ export const DELETE = (path: string, middleware?: MiddlewareFunction[]) => Metho
 export const CUSTOM_RESPONSE = () => CustomMethodDecorator();
 
 // GUARD decorator for error handling in methods
-export function exception() {
+export function Exception() {
   return function (_target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
 
@@ -78,3 +78,14 @@ export function ResponseX() {
     return descriptor;
   };
 }
+
+export function GetMetaData(target: TargetData): MetaData {
+  if (!target.meta_data) {
+    target.meta_data = {
+      controller: '',
+      controllerMiddleware: [],
+      routes: {},
+    };
+  }
+  return target.meta_data;
+};

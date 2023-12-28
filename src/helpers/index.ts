@@ -1,7 +1,7 @@
 // Decorators
-export { controller, GET, POST, PUT, DELETE, exception } from './decorators';
+export { Controller, GET, POST, PUT, DELETE, Exception } from './decorators';
 export {
-    dataFound, dataNotFound, take, dataList, serverError, success,
+    dataFound, dataNotFound, take, dataList, serverError, success, notFound,
     extractErrorMessage, forbidden, unauthorized, clientError, messages, ApiResult
 } from './results';
 

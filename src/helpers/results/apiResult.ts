@@ -1,7 +1,6 @@
 import { MessageStatus, messages } from "./messages";
 import { appConfig } from "../../config";
 import { ApiResult } from "./types";
-import { error } from "console";
 
 // Common function to build an ApiResult
 const buildApiResult = (code: number, data?: any, options?: any): ApiResult => {
@@ -20,8 +19,8 @@ const buildApiResult = (code: number, data?: any, options?: any): ApiResult => {
 };
 
 // specific code
-export const take = (code: number, data?: any, params?: any): ApiResult => {
-  return buildApiResult(code, data, params);
+export const take = (code: number, data?: any, options?: any): ApiResult => {
+  return buildApiResult(code, data, options);
 };
 
 // successful operation
@@ -53,6 +52,11 @@ export const clientError = (error?: any): ApiResult => {
 // server error
 export const serverError = (error?: any): ApiResult => {
   return buildApiResult(500, null, { error });
+};
+
+// not found
+export const notFound = (error?: any): ApiResult => {
+  return buildApiResult(404, null, { error });
 };
 
 // Helper functions for common responses

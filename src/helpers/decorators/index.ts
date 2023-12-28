@@ -1,2 +1,2 @@
-export * from './meta';
-export * from './lib';
+export * from './type';
+export * from './library';

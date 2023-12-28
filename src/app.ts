@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import { json, urlencoded } from "body-parser";
 import path from "path";
-import { take } from "./helpers";
+import { notFound, take } from "./helpers";
 import { appConfig } from "./config";
 import { applicationRoutes } from "./routes";
 
@@ -68,8 +68,7 @@ export class App {
   private errorHandler(): void {
     // catch 404 and forward to error handler
     this.app.use('*', (req: Request, res: Response) => {
-      const notFoundResponse = take(404, `${req.originalUrl} not found!`);
-      res.status(404).send(notFoundResponse);
+      res.status(404).send(notFound(`${req.originalUrl} not found!`));
     });
 
     // handle unexpected errors

@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { Route, getMetaData } from "../helpers/decorators";
+import { Route, GetMetaData } from "../helpers/decorators";
 import { ApiResult } from "../helpers/results/types";
 import { serverError } from "../helpers";
 
@@ -7,7 +7,7 @@ const attachRouter = (appRoutes: any[]) => {
     return appRoutes.map((Controller) => {
         const router: any = express.Router();
         const controllerInstance: any = new Controller();
-        const metaData = getMetaData(controllerInstance);
+        const metaData = GetMetaData(controllerInstance);
 
         const controllerMiddleware = metaData.controllerMiddleware || [];
         const controllerPath = metaData.controller;
