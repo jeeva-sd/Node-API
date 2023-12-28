@@ -1,9 +1,9 @@
 import express, { Request, Response, NextFunction } from "express";
-import { json, urlencoded } from "body-parser";
 import path from "path";
+import { json, urlencoded } from "body-parser";
+import { applicationRoutes } from "./routes";
 import { notFound, take } from "./helpers";
 import { appConfig } from "./config";
-import { applicationRoutes } from "./routes";
 
 declare global {
   namespace Express {

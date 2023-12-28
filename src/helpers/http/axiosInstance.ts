@@ -1,5 +1,4 @@
 import axios, { AxiosInstance, CancelTokenSource } from 'axios';
-import { RequestParams } from './type';
 
 class Http {
     private instance: AxiosInstance;
