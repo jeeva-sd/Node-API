@@ -4,5 +4,6 @@ export interface ApiResult {
   code: number;
   message: string | null;
   data: any;
-  options: any;
+  options?: any;
+  error?: any;
 }

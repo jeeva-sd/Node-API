@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import * as yup from 'yup';
-import { take } from "../helpers";
+import { clientError } from "../helpers/results/apiResult";
 
 export const validate = (schema: yup.AnyObjectSchema) => {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -10,7 +10,7 @@ export const validate = (schema: yup.AnyObjectSchema) => {
             req.parameters = validatedParams;
             next();
         } catch (error) {
-            const response = take(400, error.errors);
+            const response = clientError(error.errors);
             res.status(400).send(response);
         }
     };

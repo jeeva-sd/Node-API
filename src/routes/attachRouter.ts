@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { Route, getMetaData } from "../helpers/decorators";
 import { ApiResult } from "../helpers/results/types";
-import { exception } from "../helpers";
+import { serverError } from "../helpers";
 
 const attachRouter = (appRoutes: any[]) => {
     return appRoutes.map((Controller) => {
@@ -34,7 +34,7 @@ const attachRouter = (appRoutes: any[]) => {
                         return res.send(data);
                     });
                 } catch (error) {
-                    res.status(500).send(exception(error));
+                    res.status(500).send(serverError(error));
                 }
             });
         });

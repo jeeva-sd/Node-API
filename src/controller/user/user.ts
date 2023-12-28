@@ -1,25 +1,21 @@
 import { Request } from "express";
-import { CONTROLLER, GET } from "../../helpers";
+import { controller, GET } from "../../helpers";
 import UserCore from "../../core/user";
 import { validate } from "../../middleware";
 import { userById } from "./userHandler";
 
-@CONTROLLER("/user")
+@controller("/user")
 class UserController {
     private core: UserCore;
 
-    constructor() {
-        this.core = this.instance();
-    }
-
     @GET("/list")
-    public userList(req: Request) {
-        return this.core.userList(req.parameters);
+    public userList() {
+        return this.instance().userList();
     }
 
     @GET("/:userId", [validate(userById)])
     public userById(req: Request) {
-        return this.core.userById(req.parameters);
+        return this.instance().userById(req.parameters);
     }
 
     private instance() {

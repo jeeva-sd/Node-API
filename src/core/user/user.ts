@@ -1,14 +1,14 @@
-import { GUARD, dataFound, jsonHttp } from "../../helpers";
+import { exception, dataFound, jsonHttp } from "../../helpers";
 
 class UserCore {
 
-    @GUARD()
-    public async userList(params: any) {
+    @exception()
+    public async userList() {
         const userResponse = await jsonHttp.get(`/users`);
         return dataFound(userResponse);
     }
 
-    @GUARD()
+    @exception()
     public async userById(params: any) {
         const userResponse = await jsonHttp.get(`/users/${params.userId}`);
         return dataFound(userResponse);
