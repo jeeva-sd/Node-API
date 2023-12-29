@@ -54,9 +54,9 @@ export const appConfig: AppConfig = {
         DB_CONNECTION_LIMIT: readEnv("DB_CONNECTION_LIMIT"),
         DB_IS_MULTIPLE_STATEMENT: readEnv("DB_IS_MULTIPLE_STATEMENT"),
         DB_SHOULD_WAIT_FOR_CONNECTIONS: readEnv("DB_SHOULD_WAIT_FOR_CONNECTIONS"),
+        DATABASE_URL: readEnv("DATABASE_URL")
     },
     general: {
         ALLOWED_DOMAINS: readEnv("ALLOWED_DOMAINS")
     }
 };
-

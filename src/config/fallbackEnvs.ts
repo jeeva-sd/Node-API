@@ -25,6 +25,7 @@ export const fallbackEnvs: ExtendedConfig = {
     DB_CONNECTION_LIMIT: 20,
     DB_IS_MULTIPLE_STATEMENT: true,
     DB_SHOULD_WAIT_FOR_CONNECTIONS: false,
+    DATABASE_URL: 'mysql://root:QwertyuI@localhost:3306/demo',
 
     ALLOWED_DOMAINS: 'http://localhost:3000'
 };

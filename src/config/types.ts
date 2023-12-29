@@ -18,6 +18,7 @@ interface DbConnectionConfig {
   DB_CONNECTION_LIMIT: number;
   DB_IS_MULTIPLE_STATEMENT: boolean;
   DB_SHOULD_WAIT_FOR_CONNECTIONS: boolean;
+  DATABASE_URL: string;
 }
 
 interface CryptoCredential {
