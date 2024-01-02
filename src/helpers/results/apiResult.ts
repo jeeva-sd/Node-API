@@ -1,4 +1,4 @@
-import {  messages } from "./messages";
+import { messages } from "./messages";
 import { appConfig } from "../../config";
 import { ApiResult, MessageStatus } from "./types";
 
@@ -62,6 +62,10 @@ export const notFound = (error?: any): ApiResult => {
 // Helper functions for common responses
 export const dataFound = (data: any): ApiResult => {
   return buildApiResult(1000, data);
+};
+
+export const dbError = (data: any): ApiResult => {
+  return buildApiResult(1004, null, { error: data.error });
 };
 
 export const dataNotFound = (data: any = []): ApiResult => {

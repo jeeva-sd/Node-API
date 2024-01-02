@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { MetaData, TargetData } from './type';
+import { DbResponse, MetaData, TargetData } from './type';
 import { extractErrorMessage, serverError } from '../results/apiResult';
 
 // Define a type for middleware functions
@@ -89,3 +89,21 @@ export function GetMetaData(target: TargetData): MetaData {
   }
   return target.meta_data;
 };
+
+export function DbException() {
+  return (_target: any, _key: string, descriptor: PropertyDescriptor) => {
+    const originalMethod = descriptor.value;
+
+    descriptor.value = async function (...args: any[]) {
+      try {
+        const result = await originalMethod.apply(this, args);
+        return { success: true, data: result, error: null } as DbResponse;
+      } catch (err) {
+        const error = extractErrorMessage(err);
+        return { success: false, data: null, error } as DbResponse;
+      }
+    };
+
+    return descriptor;
+  };
+}
