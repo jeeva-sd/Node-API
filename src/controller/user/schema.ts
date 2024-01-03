@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
-const userById = yup.object({
+const userByIdSchema = yup.object({
     userId: yup.number().positive().integer(),
 });
 
-export { userById };
+export { userByIdSchema };

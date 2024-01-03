@@ -51,8 +51,27 @@ export function Exception() {
         const result = await originalMethod.apply(this, args);
         return result;
       } catch (error) {
-        console.error(`Error in ${propertyKey}:\n${extractErrorMessage(error)}`);
+        console.error(`\nError in core at "${propertyKey}":\n${extractErrorMessage(error)}`);
         return serverError(error);
+      }
+    };
+
+    return descriptor;
+  };
+}
+
+export function DbException() {
+  return (_target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+    const originalMethod = descriptor.value;
+
+    descriptor.value = async function (...args: any[]) {
+      try {
+        const result = await originalMethod.apply(this, args);
+        return { success: true, data: result, error: null } as DbResponse;
+      } catch (err) {
+        const error = extractErrorMessage(err);
+        console.error(`\nError in repository at "${propertyKey}":\n${extractErrorMessage(error)}`);
+        return { success: false, data: null, error } as DbResponse;
       }
     };
 
@@ -89,21 +108,3 @@ export function GetMetaData(target: TargetData): MetaData {
   }
   return target.meta_data;
 };
-
-export function DbException() {
-  return (_target: any, _key: string, descriptor: PropertyDescriptor) => {
-    const originalMethod = descriptor.value;
-
-    descriptor.value = async function (...args: any[]) {
-      try {
-        const result = await originalMethod.apply(this, args);
-        return { success: true, data: result, error: null } as DbResponse;
-      } catch (err) {
-        const error = extractErrorMessage(err);
-        return { success: false, data: null, error } as DbResponse;
-      }
-    };
-
-    return descriptor;
-  };
-}

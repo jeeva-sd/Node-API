@@ -1,16 +1,16 @@
 import { Exception, dataFound, dbError, jsonHttp } from "../../helpers";
-import UserQueries from "../../database/queries/user";
+import { UserRepository } from "./repository";
 
 class UserCore {
-    private userQueries;
+    private userRepository;
 
     constructor() {
-        this.userQueries = UserQueries.getInstance();
+        this.userRepository = UserRepository.getInstance();
     }
 
     @Exception()
     public async getUserList() {
-        const userList: any = await this.userQueries.getUserList();
+        const userList: any = await this.userRepository.getUserList();
         if (userList.error) return dbError(userList);
 
         return dataFound(userList);
@@ -23,4 +23,4 @@ class UserCore {
     }
 }
 
-export default UserCore;
+export { UserCore };

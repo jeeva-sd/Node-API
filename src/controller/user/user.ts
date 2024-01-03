@@ -1,26 +1,24 @@
 import { Request } from "express";
 import { Controller, GET } from "../../helpers";
-import UserCore from "../../core/user";
-import { validate } from "../../middleware";
-import { userById } from "./schema";
+import { validateParams } from "../../middleware";
+import { userByIdSchema } from "./schema";
+import { UserCore } from "../../core/user";
 
 @Controller("/user")
-class UserController {
-    private userCore: UserCore;
+class UserController extends UserCore {
+
+    constructor() {
+        super();
+    }
 
     @GET("/list")
     public userList() {
-        return this.userInstance().getUserList();
+        return this.getUserList();
     }
 
-    @GET("/:userId", [validate(userById)])
+    @GET("/:userId", [validateParams(userByIdSchema)])
     public userById(req: Request) {
-        return this.userInstance().getUserById(req.parameters);
-    }
-
-    private userInstance() {
-        if (!this.userCore) this.userCore = new UserCore();
-        return this.userCore;
+        return this.getUserById(req.parameters);
     }
 }
 

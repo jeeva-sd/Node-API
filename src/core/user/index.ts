@@ -1,1 +1,2 @@
-export { default } from './user';
+export { UserCore } from './user';
+export { UserRepository } from './repository';
