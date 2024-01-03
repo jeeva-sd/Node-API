@@ -17,7 +17,7 @@ class UserRepository {
 
     @DbException()
     public async getUserList() {
-        const userList = await db.user.findMany();
+        const userList = await db.user.count();
         return userList;
     }
 }
