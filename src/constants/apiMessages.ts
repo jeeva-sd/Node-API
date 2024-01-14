@@ -1,8 +1,13 @@
 import { Message, MessageStatus } from './type';
 
 export const apiMessages: { [key: number]: Message; } = {
+    // Successful
     200: { message: 'Request completed successfully', status: MessageStatus.success },
+    201: { message: 'Resource successfully created', status: MessageStatus.success },
     202: { message: 'Request accepted for processing', status: MessageStatus.success },
+    203: { message: 'Request succeeded, but details might be rough', status: MessageStatus.success },
+    204: { message: 'Action completed', status: MessageStatus.success },
+    208: { message: 'Duplicate request detected', status: MessageStatus.success },
 
     301: { message: 'Resource has been permanently moved', status: MessageStatus.error },
     302: { message: 'Resource has been temporarily moved', status: MessageStatus.error },
@@ -22,8 +27,8 @@ export const apiMessages: { [key: number]: Message; } = {
     413: { message: 'Request payload exceeds the maximum allowable size', status: MessageStatus.error },
     415: { message: 'Requested media type is not supported', status: MessageStatus.error },
     416: { message: 'Requested range is not satisfiable', status: MessageStatus.error },
-    429: { message: 'Too many requests', status: MessageStatus.error },
     422: { message: 'Invalid payload', status: MessageStatus.error },
+    429: { message: 'Too many requests', status: MessageStatus.error },
 
     // Server
     500: { message: 'Internal server error', status: MessageStatus.error },

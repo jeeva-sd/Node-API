@@ -65,7 +65,8 @@ export function DbException() {
     descriptor.value = async function (...args: ClassPrototype[]) {
       try {
         const result = await originalMethod.apply(this, args);
-        return { success: true, data: result, error: null } as DbResponse;
+        const code = result?.code;
+        return { success: code ? false : true, data: result, error: null, code } as DbResponse;
       } catch (err) {
         const error = extractErrorMessage(err);
         console.error(`\nError in repository at "${propertyKey}":\n${extractErrorMessage(error)}`);

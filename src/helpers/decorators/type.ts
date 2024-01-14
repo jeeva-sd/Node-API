@@ -24,6 +24,7 @@ export type DbResponse = {
     success: boolean;
     data: any;
     error: any;
+    code?: number;
 };
 
 export type MiddlewareFunction = (req: RequestX, res: Response, next: NextFunction) => void;
