@@ -1,62 +1,38 @@
-import dotenv from 'dotenv';
-import { AppConfig, Environment, ExtendedConfig } from './types';
-import { fallbackEnvs } from './fallbackEnvs';
-
-const environment = process.env.NODE_ENV || 'local';
-dotenv.config({ path: `.${environment}.env` });
-
-export const env: Environment = (() => {
-    let env = null;
-    try {
-        env = process.env as Environment;
-    } catch (error) {
-        env = {};
-    }
-    return env;
-})();
-
-const readEnv = <K extends keyof ExtendedConfig>(name: K): ExtendedConfig[K] => {
-    const value = env[name];
-    const fallback = fallbackEnvs[name] as ExtendedConfig[K];
-
-    if (typeof value === 'undefined') return fallback;
-    if (typeof fallback === 'number') return parseInt(value) ? parseInt(value) as ExtendedConfig[K] : fallback;
-    if (typeof fallback === 'boolean') return value === 'true' ? true as ExtendedConfig[K] : false as ExtendedConfig[K];
-    return value as ExtendedConfig[K];
-};
+import { readEnv } from 'helpers';
+import { AppConfig } from '.';
 
 export const appConfig: AppConfig = {
     app: {
-        VERSION: readEnv('VERSION'),
-        APP_NAME: readEnv('APP_NAME'),
-        PORT: readEnv('PORT'),
-        NODE_ENV: readEnv('NODE_ENV'),
+        version: readEnv('VERSION', 'v1.0'),
+        name: readEnv('APP_NAME', 'Node-API'),
+        port: readEnv('PORT', 1314),
+        environment: readEnv('NODE_ENV', 'local'),
     },
     jwt: {
-        JWT_ACCESS_SECRET_KEY: readEnv('JWT_ACCESS_SECRET_KEY'),
-        JWT_REFRESH_SECRET_KEY: readEnv('JWT_REFRESH_SECRET_KEY'),
-        JWT_ID_SECRET_KEY: readEnv('JWT_ID_SECRET_KEY'),
-        JWT_ACCESS_EXPIRATION_DAYS: readEnv('JWT_ACCESS_EXPIRATION_DAYS'),
-        JWT_REFRESH_EXPIRATION_DAYS: readEnv('JWT_REFRESH_EXPIRATION_DAYS'),
-        JWT_ID_EXPIRATION_DAYS: readEnv('JWT_ID_EXPIRATION_DAYS'),
+        accessSecretKey: readEnv('JWT_ACCESS_SECRET_KEY', 'default-access-secret'),
+        refreshSecretKey: readEnv('JWT_REFRESH_SECRET_KEY', 'default-refresh-secret'),
+        idSecretKey: readEnv('JWT_ID_SECRET_KEY', 'default-id-secret'),
+        accessExpirationDays: readEnv('JWT_ACCESS_EXPIRATION_DAYS', 7),
+        refreshExpirationDays: readEnv('JWT_REFRESH_EXPIRATION_DAYS', 30),
+        idExpirationDays: readEnv('JWT_ID_EXPIRATION_DAYS', 30),
     },
     crypto: {
-        CRYPTO_ALGORITHM: readEnv('CRYPTO_ALGORITHM'),
-        CRYPTO_SECRET: readEnv('CRYPTO_SECRET'),
-        CRYPTO_EXPIRATION_DAYS: readEnv('CRYPTO_EXPIRATION_DAYS'),
+        algorithm: readEnv('CRYPTO_ALGORITHM', 'aes-256-ctr'),
+        secret: readEnv('CRYPTO_SECRET', 'default-crypto-secret'),
+        expirationDays: readEnv('CRYPTO_EXPIRATION_DAYS', 2),
     },
     dbConnections: {
-        DB_HOST: readEnv('DB_HOST'),
-        DB_PORT: readEnv('DB_PORT'),
-        DB_USERNAME: readEnv('DB_USERNAME'),
-        DB_PASSWORD: readEnv('DB_PASSWORD'),
-        DB_NAME: readEnv('DB_NAME'),
-        DB_CONNECTION_LIMIT: readEnv('DB_CONNECTION_LIMIT'),
-        DB_IS_MULTIPLE_STATEMENT: readEnv('DB_IS_MULTIPLE_STATEMENT'),
-        DB_SHOULD_WAIT_FOR_CONNECTIONS: readEnv('DB_SHOULD_WAIT_FOR_CONNECTIONS'),
-        DATABASE_URL: readEnv('DATABASE_URL')
+        host: readEnv('DB_HOST', 'localhost'),
+        port: readEnv('DB_PORT', 3306),
+        username: readEnv('DB_USERNAME', 'default-username'),
+        password: readEnv('DB_PASSWORD', 'default-password'),
+        dbName: readEnv('DB_NAME', 'default-db-name'),
+        connectionLimit: readEnv('DB_CONNECTION_LIMIT', 20),
+        isMultipleStatement: readEnv('DB_IS_MULTIPLE_STATEMENT', true),
+        shouldWaitForConnections: readEnv('DB_SHOULD_WAIT_FOR_CONNECTIONS', false),
+        databaseURL: readEnv('DATABASE_URL', 'mysql://root:password@localhost:3306'),
     },
     general: {
-        ALLOWED_DOMAINS: readEnv('ALLOWED_DOMAINS')
-    }
+        allowedDomains: readEnv('ALLOWED_DOMAINS', 'http://localhost:5173'),
+    },
 };

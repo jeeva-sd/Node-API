@@ -9,7 +9,7 @@ const buildApiResult = (code: number, data?: any, options?: any): ApiResult => {
   const error = options?.error ? extractErrorMessage(options?.error) : null;
 
   return {
-    version: appConfig.app.VERSION,
+    version: appConfig.app.version,
     code,
     status,
     message,

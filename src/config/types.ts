@@ -2,51 +2,47 @@ export interface Environment {
   [key: string]: string | undefined;
 }
 
-interface AppCredential {
-  VERSION: string;
-  APP_NAME: string;
-  PORT: number;
-  NODE_ENV: string;
+interface AppInfo {
+  version: string;
+  name: string;
+  port: number;
+  environment: string;
 }
 
-interface DbConnectionConfig {
-  DB_HOST: string;
-  DB_PORT: number;
-  DB_USERNAME: string;
-  DB_NAME: string;
-  DB_PASSWORD: string;
-  DB_CONNECTION_LIMIT: number;
-  DB_IS_MULTIPLE_STATEMENT: boolean;
-  DB_SHOULD_WAIT_FOR_CONNECTIONS: boolean;
-  DATABASE_URL: string;
+interface JwtConfig {
+  accessSecretKey: string;
+  refreshSecretKey: string;
+  idSecretKey: string;
+  accessExpirationDays: number;
+  refreshExpirationDays: number;
+  idExpirationDays: number;
 }
 
-interface CryptoCredential {
-  CRYPTO_ALGORITHM: string;
-  CRYPTO_SECRET: string;
-  CRYPTO_EXPIRATION_DAYS: number;
+interface CryptoConfig {
+  algorithm: string;
+  secret: string;
+  expirationDays: number;
 }
 
-interface JwtCredential {
-  JWT_ACCESS_SECRET_KEY: string;
-  JWT_REFRESH_SECRET_KEY: string;
-  JWT_ID_SECRET_KEY: string;
-  JWT_ACCESS_EXPIRATION_DAYS: number;
-  JWT_REFRESH_EXPIRATION_DAYS: number;
-  JWT_ID_EXPIRATION_DAYS: number;
+interface DbConfig {
+  host: string;
+  port: number;
+  username: string;
+  password: string;
+  dbName: string;
+  connectionLimit: number;
+  isMultipleStatement: boolean;
+  shouldWaitForConnections: boolean;
+  databaseURL: string;
 }
 
 interface GeneralConfig {
-  ALLOWED_DOMAINS: string;
+  allowedDomains: string;
 }
 export interface AppConfig {
-  app: AppCredential;
-  jwt: JwtCredential;
-  crypto: CryptoCredential;
-  dbConnections: DbConnectionConfig;
+  app: AppInfo;
+  jwt: JwtConfig;
+  crypto: CryptoConfig;
+  dbConnections: DbConfig;
   general: GeneralConfig;
 }
-
-export interface ExtendedConfig
-  extends AppCredential, DbConnectionConfig,
-  CryptoCredential, JwtCredential, GeneralConfig { }

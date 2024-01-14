@@ -15,7 +15,7 @@ class Server {
 
     public run(): void {
         this.app = new App().app;
-        this.port = appConfig.app.PORT;
+        this.port = appConfig.app.port;
         this.app.set('port', this.port);
 
         this.server = http.createServer(this.app);

@@ -43,8 +43,8 @@ export class App {
     private routeHandler(): void {
         this.app.use((req: RequestX, res: Response, next: NextFunction) => {
             if (req.url === '/') {
-                const { NODE_ENV, APP_NAME } = appConfig.app;
-                const response = take(200, { name: APP_NAME, env: NODE_ENV });
+                const { environment, name } = appConfig.app;
+                const response = take(200, { name, environment });
                 return res.send(response);
             }
 

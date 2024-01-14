@@ -1,3 +1,6 @@
+// Common
+export { readEnv } from './common';
+
 // Router
 export { attachRouter } from './attachRouter';
 
