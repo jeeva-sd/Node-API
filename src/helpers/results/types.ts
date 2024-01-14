@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { DbResponse } from "../decorators";
 
 export interface ApiResult {
   version: string;
@@ -29,3 +30,5 @@ export interface Messages {
 export interface RequestX extends Request {
   parameters?: Record<string, any>;
 }
+
+export type DbResult = DbResponse | any;
