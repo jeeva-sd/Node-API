@@ -4,11 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "npx eslint src",
-    "formatPrismaClient": "npx eslint --fix .",
+    "lint": "eslint .",
+    "format": "eslint --fix .",
     "prestart": "prisma generate",
     "start": "nodemon -r tsconfig-paths/register src/server.ts",
     "build": "tsc && tsconfig-paths build -p tsconfig.json"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint",
+      "git add"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -32,6 +43,8 @@
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
     "eslint": "^8.56.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
