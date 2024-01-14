@@ -1,5 +1,5 @@
 import { Response, NextFunction } from 'express';
-import { RequestX, extractErrorMessage, serverError } from '../results';
+import { RequestX, extractErrorMessage, serverError } from '../wrappers';
 import { DbResponse, MetaData, TargetData } from './type';
 
 // Define a type for middleware functions

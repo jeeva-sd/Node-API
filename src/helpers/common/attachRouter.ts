@@ -1,5 +1,5 @@
 import express, { Response } from 'express';
-import { Route, GetMetaData, ApiResult, serverError, RequestX } from '.';
+import { Route, GetMetaData, ApiResult, serverError, RequestX } from '..';
 
 const attachRouter = (appRoutes: any[]) => {
     return appRoutes.map((Controller) => {

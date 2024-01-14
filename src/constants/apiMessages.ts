@@ -1,15 +1,13 @@
-import { Message, MessageStatus } from './types';
+import { Message, MessageStatus } from './type';
 
-export const messages: { [key: number]: Message; } = {
-    // Success codes
+export const responseMessages: { [key: number]: Message; } = {
     200: { message: 'Request completed successfully', status: MessageStatus.success },
     202: { message: 'Request accepted for processing', status: MessageStatus.success },
-  
-    // Redirection codes
+
     301: { message: 'Resource has been permanently moved', status: MessageStatus.error },
     302: { message: 'Resource has been temporarily moved', status: MessageStatus.error },
-  
-    // Client error codes
+
+    // Client
     400: { message: 'Invalid request syntax or parameters', status: MessageStatus.error },
     401: { message: 'Invalid authentication credentials provided', status: MessageStatus.error },
     403: { message: 'Insufficient permissions to access the resource', status: MessageStatus.error },
@@ -26,8 +24,8 @@ export const messages: { [key: number]: Message; } = {
     416: { message: 'Requested range is not satisfiable', status: MessageStatus.error },
     429: { message: 'Too many requests', status: MessageStatus.error },
     422: { message: 'Invalid payload', status: MessageStatus.error },
-  
-    // Server error codes
+
+    // Server
     500: { message: 'Internal server error', status: MessageStatus.error },
     502: { message: 'Bad gateway', status: MessageStatus.error },
     503: { message: 'Service unavailable', status: MessageStatus.error },
@@ -36,10 +34,10 @@ export const messages: { [key: number]: Message; } = {
     507: { message: 'Insufficient storage', status: MessageStatus.error },
     511: { message: 'Network authentication required', status: MessageStatus.error },
 
-    // Custom 
+    // Custom
     1000: { message: 'Data found', status: MessageStatus.success },
     1001: { message: 'Data not found', status: MessageStatus.failure },
     1003: { message: 'Validation Errors', status: MessageStatus.error },
-    1004: { message: 'Unexpected error', status: MessageStatus.error },
-  };
-  
+    1004: { message: 'Unexpected error', status: MessageStatus.error }
+};
+

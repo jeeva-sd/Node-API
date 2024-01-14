@@ -29,18 +29,18 @@
         "block-spacing": "warn",                    // inconsistent spacing within blocks
         "key-spacing": "warn"                       // spacing around object keys
     },
-    "ignorePatterns": ["node_modules/", "dist/", "helpers", "database"],
+    "ignorePatterns": ["node_modules/", "dist/", "helpers", "database", "constants"],
     "overrides": [
-        {
-          "files": ["**/*.ts"],
-          "extends": [
-            "eslint:recommended",
-            "plugin:@typescript-eslint/recommended"
-          ],
-          "rules": {
-            "@typescript-eslint/explicit-module-boundary-types": "warn",
-            "@typescript-eslint/no-explicit-any": "warn"
-          }
+      {
+        "files": [ "**/*.ts" ],
+        "extends": [
+          "eslint:recommended",
+          "plugin:@typescript-eslint/recommended"
+        ],
+        "rules": {
+          "@typescript-eslint/explicit-module-boundary-types": "warn",
+          "@typescript-eslint/no-explicit-any": "warn"
         }
+      }
     ]
 }

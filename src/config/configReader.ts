@@ -1,5 +1,5 @@
 import { readEnv } from 'helpers';
-import { AppConfig } from '.';
+import { AppConfig } from './types';
 
 export const appConfig: AppConfig = {
     app: {

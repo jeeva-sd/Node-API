@@ -2,14 +2,14 @@ export interface Environment {
   [key: string]: string | undefined;
 }
 
-interface AppInfo {
+export interface AppInfo {
   version: string;
   name: string;
   port: number;
   environment: string;
 }
 
-interface JwtConfig {
+export interface JwtConfig {
   accessSecretKey: string;
   refreshSecretKey: string;
   idSecretKey: string;
@@ -18,13 +18,13 @@ interface JwtConfig {
   idExpirationDays: number;
 }
 
-interface CryptoConfig {
+export interface CryptoConfig {
   algorithm: string;
   secret: string;
   expirationDays: number;
 }
 
-interface DbConfig {
+export interface DbConfig {
   host: string;
   port: number;
   username: string;
@@ -36,7 +36,7 @@ interface DbConfig {
   databaseURL: string;
 }
 
-interface GeneralConfig {
+export interface GeneralConfig {
   allowedDomains: string;
 }
 export interface AppConfig {
