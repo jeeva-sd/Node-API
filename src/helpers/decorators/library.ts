@@ -1,10 +1,6 @@
-import { Response, NextFunction } from 'express';
-import { RequestX, extractErrorMessage, serverError } from '../wrappers';
-import { DbResponse, MetaData, TargetData } from './type';
-
-// Define a type for middleware functions
-type MiddlewareFunction = (req: RequestX, res: Response, next: NextFunction) => void;
-type ClassPrototype = Record<string, any>;
+import { serverError } from '../wrappers';
+import { GetMetaData, extractErrorMessage } from '..';
+import { ClassPrototype, DbResponse, MiddlewareFunction } from './type';
 
 // Controller decorator
 export const Controller = (controller: string, middleware?: MiddlewareFunction[]): ClassDecorator => {
@@ -79,34 +75,4 @@ export function DbException() {
 
     return descriptor;
   };
-}
-
-// ResponseX decorator for wrapping methods with error handling
-export function ResponseX() {
-  return (_target: ClassPrototype, _propertyKey: string, descriptor: PropertyDescriptor) => {
-    const originalMethod = descriptor.value;
-
-    descriptor.value = async (req: RequestX, res: Response) => {
-      try {
-        const data = await originalMethod(req, res);
-        res.send(data);
-      } catch (error) {
-        console.log(error, 'error');
-        res.status(500).send(serverError(error));
-      }
-    };
-
-    return descriptor;
-  };
-}
-
-export function GetMetaData(target: TargetData): MetaData {
-  if (!target.meta_data) {
-    target.meta_data = {
-      controller: '',
-      controllerMiddleware: [],
-      routes: {},
-    };
-  }
-  return target.meta_data;
 }

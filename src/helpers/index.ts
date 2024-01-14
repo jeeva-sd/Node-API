@@ -1,11 +1,11 @@
 // Common
-export { readEnv, attachRouter } from './common';
+export { readEnv, attachRouter, extractErrorMessage } from './common';
 
 // Decorators
 export { Controller, GET, POST, PUT, DELETE, Exception, GetMetaData, DbException, Route } from './decorators';
 export {
     dataFound, dataNotFound, take, dataList, serverError, success, notFound, dbError,
-    extractErrorMessage, forbidden, unauthorized, clientError,
+    forbidden, unauthorized, clientError,
     ApiResult, RequestX, DbResult
 } from './wrappers';
 

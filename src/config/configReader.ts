@@ -21,7 +21,7 @@ export const appConfig: AppConfig = {
         secret: readEnv('CRYPTO_SECRET', 'default-crypto-secret'),
         expirationDays: readEnv('CRYPTO_EXPIRATION_DAYS', 2),
     },
-    dbConnections: {
+    database: {
         host: readEnv('DB_HOST', 'localhost'),
         port: readEnv('DB_PORT', 3306),
         username: readEnv('DB_USERNAME', 'default-username'),
@@ -30,7 +30,7 @@ export const appConfig: AppConfig = {
         connectionLimit: readEnv('DB_CONNECTION_LIMIT', 20),
         isMultipleStatement: readEnv('DB_IS_MULTIPLE_STATEMENT', true),
         shouldWaitForConnections: readEnv('DB_SHOULD_WAIT_FOR_CONNECTIONS', false),
-        databaseURL: readEnv('DATABASE_URL', 'mysql://root:password@localhost:3306'),
+        url: readEnv('DATABASE_URL', 'mysql://root:password@localhost:3306'),
     },
     general: {
         allowedDomains: readEnv('ALLOWED_DOMAINS', 'http://localhost:5173'),

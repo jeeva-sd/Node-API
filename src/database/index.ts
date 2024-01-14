@@ -5,7 +5,7 @@ import { appConfig } from 'config';
 const customOptions: PrismaClientOptions = {
     log: ['info', 'warn'/*, 'error' , 'query' */],
     errorFormat: 'minimal',
-    datasourceUrl: appConfig.dbConnections.databaseURL
+    datasourceUrl: appConfig.database.url
 };
 
 const dbService = PrismaService.getInstance(customOptions);

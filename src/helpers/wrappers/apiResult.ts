@@ -1,6 +1,7 @@
 import { appConfig } from 'config';
 import { ApiResult } from './types';
 import { apiMessages, MessageStatus } from '~/constants';
+import { extractErrorMessage } from '..';
 
 // Common function to build an ApiResult
 const buildApiResult = (code: number, data?: any, options?: any): ApiResult => {
@@ -65,7 +66,7 @@ export const dataFound = (data: any): ApiResult => {
 };
 
 export const dbError = (data: any): ApiResult => {
-  return buildApiResult(1004, null, { error: data.error });
+  return buildApiResult(1005, null, { error: data.error });
 };
 
 export const dataNotFound = (data: any = []): ApiResult => {
@@ -75,15 +76,3 @@ export const dataNotFound = (data: any = []): ApiResult => {
 export const dataList = (data: any): ApiResult => {
   return data && data.length > 0 ? dataFound(data) : dataNotFound();
 };
-
-export function extractErrorMessage(error: any): string | null {
-  if (typeof error === 'string') return error;
-  else if (error instanceof Error) return error.message;
-  else if (typeof error === 'object') {
-    const errorMessage = error.message || (error.error && error.error.message);
-
-    if (errorMessage) return errorMessage;
-    return error.toString?.();
-  }
-  else return error?.toString?.() || null;
-}

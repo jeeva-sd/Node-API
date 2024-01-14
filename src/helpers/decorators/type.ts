@@ -1,9 +1,5 @@
-export interface Route {
-    method: string;
-    url: string;
-    middleware?: any;
-    customResponse?: boolean;
-}
+import { NextFunction, Response } from "express";
+import { RequestX } from "../wrappers";
 
 export interface MetaData {
     controller: string;
@@ -11,6 +7,13 @@ export interface MetaData {
     routes: {
         [key: string]: Route;
     };
+}
+
+export interface Route {
+    method: string;
+    url: string;
+    middleware?: any;
+    customResponse?: boolean;
 }
 
 export interface TargetData {
@@ -21,4 +24,7 @@ export type DbResponse = {
     success: boolean;
     data: any;
     error: any;
-  };
+};
+
+export type MiddlewareFunction = (req: RequestX, res: Response, next: NextFunction) => void;
+export type ClassPrototype = Record<string, any>;

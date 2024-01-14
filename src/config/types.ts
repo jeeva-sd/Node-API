@@ -33,7 +33,7 @@ export interface DbConfig {
   connectionLimit: number;
   isMultipleStatement: boolean;
   shouldWaitForConnections: boolean;
-  databaseURL: string;
+  url: string;
 }
 
 export interface GeneralConfig {
@@ -43,6 +43,6 @@ export interface AppConfig {
   app: AppInfo;
   jwt: JwtConfig;
   crypto: CryptoConfig;
-  dbConnections: DbConfig;
+  database: DbConfig;
   general: GeneralConfig;
 }

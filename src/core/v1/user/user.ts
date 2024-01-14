@@ -12,7 +12,7 @@ class UserCore {
     @Exception()
     public async getUserList(): Promise<ApiResult> {
         const userList: DbResult = await this.userRepository.getUserList();
-        if (userList.success) return dbError(userList);
+        if (!userList.success) return dbError(userList);
 
         return dataFound(userList);
     }
