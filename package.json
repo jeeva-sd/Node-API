@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "format": "eslint --fix .",
+    "seed": "npx prisma db seed",
     "predev": "rm -rf node_modules/.prisma && prisma generate",
     "dev": "nodemon -r tsconfig-paths/register src/server.ts",
     "prod": "set NODE_ENV=production && prisma generate && ts-node -r tsconfig-paths/register src/server.ts",

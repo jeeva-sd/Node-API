@@ -2,7 +2,7 @@ import { Request } from "express";
 import { DbResponse } from "../decorators";
 
 export interface RequestX extends Request {
-  parameters?: Record<string, any>;
+  parameters?: any;
 }
 
 export interface ResponseX {
