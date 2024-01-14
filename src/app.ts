@@ -57,7 +57,7 @@ export class App {
     }
 
     private combineRoutes(): void {
-        this.app.use('/api', applicationRoutes);
+        this.app.use('/api/v1', applicationRoutes);
     }
 
     private errorHandler(): void {

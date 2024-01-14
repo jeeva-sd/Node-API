@@ -1,4 +1,4 @@
-import { userIdParams } from 'controllers/user';
+import { userIdParams } from '~/controllers/v1/user';
 import { dbError, dataFound, jsonHttp, Exception, ApiResult, DbResult } from 'helpers';
 import { UserRepository } from './repository';
 

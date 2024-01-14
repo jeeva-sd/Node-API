@@ -1,4 +1,4 @@
-import UserController from 'controllers/user';
+import UserController from 'controllers/v1/user';
 
 export const combineRoutes = [
     UserController
