@@ -1,5 +1,5 @@
 import express, { Response } from 'express';
-import { Route, GetMetaData, ApiResult, serverError, RequestX } from '..';
+import { Route, GetMetaData, ResponseX, serverError, RequestX } from '..';
 
 const attachRouter = (appRoutes: any[]) => {
     return appRoutes.map((Controller) => {
@@ -28,7 +28,7 @@ const attachRouter = (appRoutes: any[]) => {
                     if (!(response instanceof Promise)) return res.send(response);
 
                     response
-                        .then((data: ApiResult) => {
+                        .then((data: ResponseX) => {
                             if (data.status !== 'success') return res.status(400).send(data);
                             return res.send(data);
                         })

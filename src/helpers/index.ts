@@ -6,7 +6,7 @@ export { Controller, GET, POST, PUT, DELETE, Exception, GetMetaData, DbException
 export {
     dataFound, dataNotFound, take, dataList, serverError, success, notFound, dbError,
     forbidden, unauthorized, clientError,
-    ApiResult, RequestX, DbResult
+    ResponseX, RequestX, DbResult
 } from './wrappers';
 
 // http

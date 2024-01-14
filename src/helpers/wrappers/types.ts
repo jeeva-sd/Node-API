@@ -1,7 +1,11 @@
 import { Request } from "express";
 import { DbResponse } from "../decorators";
 
-export interface ApiResult {
+export interface RequestX extends Request {
+  parameters?: Record<string, any>;
+}
+
+export interface ResponseX {
   version: string;
   status: string;
   code: number;
@@ -9,10 +13,6 @@ export interface ApiResult {
   data: any;
   options?: any;
   error?: any;
-}
-
-export interface RequestX extends Request {
-  parameters?: Record<string, any>;
 }
 
 export type DbResult = DbResponse | any;

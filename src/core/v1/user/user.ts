@@ -1,5 +1,5 @@
-import { userIdParams } from '~/controllers/v1/user';
-import { dbError, dataFound, jsonHttp, Exception, ApiResult, DbResult } from 'helpers';
+import { userIdParams } from 'controllers/v1/user';
+import { dbError, dataFound, jsonHttp, Exception, ResponseX, DbResult } from 'helpers';
 import { UserRepository } from './repository';
 
 class UserCore {
@@ -10,7 +10,7 @@ class UserCore {
     }
 
     @Exception()
-    public async getUserList(): Promise<ApiResult> {
+    public async getUserList(): Promise<ResponseX> {
         const userList: DbResult = await this.userRepository.getUserList();
         if (!userList.success) return dbError(userList);
 
@@ -18,7 +18,7 @@ class UserCore {
     }
 
     @Exception()
-    public async getUserById(params: userIdParams): Promise<ApiResult> {
+    public async getUserById(params: userIdParams): Promise<ResponseX> {
         const userResponse = await jsonHttp.get(`/users/${params.userId}`);
         return dataFound(userResponse);
     }

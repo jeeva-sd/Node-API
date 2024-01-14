@@ -1,4 +1,4 @@
-import { ApiResult, Controller, GET, RequestX } from 'helpers';
+import { ResponseX, Controller, GET, RequestX } from 'helpers';
 import { validateParams } from 'middlewares';
 import { UserCore } from 'core/v1/user';
 import { userByIdSchema, userIdParams } from './schema';
@@ -11,12 +11,12 @@ class UserController extends UserCore {
     }
 
     @GET('/list')
-    public userList(): Promise<ApiResult> {
+    public userList(): Promise<ResponseX> {
         return this.getUserList();
     }
 
     @GET('/:userId', [validateParams(userByIdSchema)])
-    public userById(req: RequestX): Promise<ApiResult> {
+    public userById(req: RequestX): Promise<ResponseX> {
         return this.getUserById(req.parameters as userIdParams);
     }
 }
