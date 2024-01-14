@@ -1,2 +1,2 @@
 export { default } from './user';
-export { userByIdSchema } from './schema';
+export * from './schema';

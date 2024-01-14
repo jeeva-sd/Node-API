@@ -2,8 +2,8 @@ import express, { Response, NextFunction } from 'express';
 import path from 'path';
 import { json, urlencoded } from 'body-parser';
 import { applicationRoutes } from './routes';
-import { RequestX, notFound, take } from './helpers';
-import { appConfig } from './config';
+import { RequestX, notFound, take } from 'helpers';
+import { appConfig } from 'config';
 
 export class App {
     public app: express.Express;
@@ -20,12 +20,15 @@ export class App {
             // For CORS
             // const origin: string = req.headers.origin;
             // const allowedDomains: string[] = appConfig.general.ALLOWED_DOMAINS.split(',');
-            // if (allowedDomains.includes(origin)) res.header("Access-Control-Allow-Origin", origin);
+            // if (allowedDomains.includes(origin)) {
+            // res.header("Access-Control-Allow-Origin", origin);
+            // }
             // else return res.status(403).send(take(403));
 
             res.header('Access-Control-Allow-Origin', '*');
             res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-            res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, X-Access-Token, Authorization, X-Key');
+            res.header('Access-Control-Allow-Headers',
+                'Content-Type, Accept, X-Access-Token, Authorization, X-Key');
 
             // Handle preflight requests
             if (req.method === 'OPTIONS') return res.status(200).end();

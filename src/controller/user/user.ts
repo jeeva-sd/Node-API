@@ -1,7 +1,7 @@
-import { ApiResult, Controller, GET, RequestX } from '../../helpers';
-import { validateParams } from '../../middleware';
+import { ApiResult, Controller, GET, RequestX } from 'helpers';
+import { validateParams } from 'middleware';
+import { UserCore } from 'core/user';
 import { userByIdSchema, userIdParams } from './schema';
-import { UserCore } from '../../core/user';
 
 @Controller('/user')
 class UserController extends UserCore {

@@ -29,7 +29,7 @@
         "block-spacing": "warn",                    // inconsistent spacing within blocks
         "key-spacing": "warn"                       // spacing around object keys
     },
-    "ignorePatterns": ["node_modules/", "dist/", "helpers"],
+    "ignorePatterns": ["node_modules/", "dist/", "helpers", "database"],
     "overrides": [
         {
           "files": ["**/*.ts"],

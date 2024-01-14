@@ -7,8 +7,8 @@
     "lint": "npx eslint src",
     "formatPrismaClient": "npx eslint --fix .",
     "prestart": "prisma generate",
-    "start": "nodemon -V --exec ts-node ./src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon -r tsconfig-paths/register src/server.ts",
+    "build": "tsc && tsconfig-paths build -p tsconfig.json"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +34,7 @@
     "eslint": "^8.56.0",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.3.2"
   }
 }
