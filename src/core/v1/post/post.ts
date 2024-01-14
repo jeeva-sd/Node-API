@@ -1,4 +1,4 @@
-import { dbError, dataFound, Exception, ResponseX, DbResult, dataList, take } from 'helpers';
+import { dbError, Exception, ResponseX, DbResult, dataList, take } from 'helpers';
 import { PostParams, postIdParams } from 'controllers/v1/post';
 import { PostRepository } from './repository';
 
@@ -22,7 +22,7 @@ class PostCore {
         const postResult: DbResult = await this.postRepository.getPostById(params.postId);
         if (!postResult.success) return dbError(postResult);
 
-        return dataFound(postResult.data);
+        return dataList(postResult.data);
     }
 
     @Exception()

@@ -76,5 +76,8 @@ export const dataNotFound = (data: any = []): ResponseX => {
 };
 
 export const dataList = (data: any): ResponseX => {
-  return data && data.length > 0 ? dataFound(data) : dataNotFound();
+  if (!data) return dataNotFound();
+  else if (Array.isArray(data) && data.length > 0) return dataFound(data);
+  else if (typeof data === 'object' && Object.keys(data).length > 0) return dataFound(data);
+  else return dataNotFound();
 };

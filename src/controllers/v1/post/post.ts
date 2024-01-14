@@ -4,25 +4,26 @@ import { PostCore } from 'core/v1/post';
 import { PostParams, postByIdSchema, postIdParams, postSchema } from './schema';
 
 @Controller('/post')
-class PostController extends PostCore {
+class PostController {
+    private postCore: PostCore;
 
     constructor() {
-        super();
+        this.postCore = new PostCore();
     }
 
     @GET('/list')
     public postList(): Promise<ResponseX> {
-        return this.getPostList();
+        return this.postCore.getPostList();
     }
 
     @GET('/:postId', [validateParams(postByIdSchema)])
     public postById(req: RequestX): Promise<ResponseX> {
-        return this.getPostById(req.parameters as postIdParams);
+        return this.postCore.getPostById(req.parameters as postIdParams);
     }
 
     @POST('/', [validateParams(postSchema)])
     public newPost(req: RequestX): Promise<ResponseX> {
-        return this.createPost(req.parameters as PostParams);
+        return this.postCore.createPost(req.parameters as PostParams);
     }
 }
 

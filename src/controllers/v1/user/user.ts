@@ -4,20 +4,21 @@ import { UserCore } from 'core/v1/user';
 import { userByIdSchema, userIdParams } from './schema';
 
 @Controller('/user')
-class UserController extends UserCore {
+class UserController {
+    private userCore: UserCore;
 
     constructor() {
-        super();
+        this.userCore = new UserCore();
     }
 
     @GET('/list')
     public userList(): Promise<ResponseX> {
-        return this.getUserList();
+        return this.userCore.getUserList();
     }
 
     @GET('/:userId', [validateParams(userByIdSchema)])
     public userById(req: RequestX): Promise<ResponseX> {
-        return this.getUserById(req.parameters as userIdParams);
+        return this.userCore.getUserById(req.parameters as userIdParams);
     }
 }
 
