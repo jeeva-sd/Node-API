@@ -1,5 +1,5 @@
 import { ApiResult, Controller, GET, RequestX } from 'helpers';
-import { validateParams } from 'middleware';
+import { validateParams } from 'middlewares';
 import { UserCore } from 'core/user';
 import { userByIdSchema, userIdParams } from './schema';
 

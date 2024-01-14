@@ -1,2 +1,2 @@
 export { Message, MessageStatus, Messages } from './type';
-export { responseMessages } from './apiMessages';
+export { apiMessages } from './apiMessages';

@@ -27,7 +27,8 @@
         "array-bracket-spacing": ["warn", "never"], // inconsistent spacing in array brackets
         "arrow-spacing": "warn",                    // spacing around arrow function parameters
         "block-spacing": "warn",                    // inconsistent spacing within blocks
-        "key-spacing": "warn"                       // spacing around object keys
+        "key-spacing": "warn",                      // spacing around object keys
+        "no-console": ["warn", { "allow": ["warn", "error"] }]
     },
     "ignorePatterns": ["node_modules/", "dist/", "helpers", "database", "constants"],
     "overrides": [

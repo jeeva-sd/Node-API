@@ -1,6 +1,6 @@
 import { Message, MessageStatus } from './type';
 
-export const responseMessages: { [key: number]: Message; } = {
+export const apiMessages: { [key: number]: Message; } = {
     200: { message: 'Request completed successfully', status: MessageStatus.success },
     202: { message: 'Request accepted for processing', status: MessageStatus.success },
 

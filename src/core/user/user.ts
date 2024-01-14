@@ -1,4 +1,4 @@
-import { userIdParams } from 'controller/user';
+import { userIdParams } from 'controllers/user';
 import { dbError, dataFound, jsonHttp, Exception, ApiResult, DbResult } from 'helpers';
 import { UserRepository } from './repository';
 
@@ -19,7 +19,6 @@ class UserCore {
 
     @Exception()
     public async getUserById(params: userIdParams): Promise<ApiResult> {
-        console.log(params, 'params');
         const userResponse = await jsonHttp.get(`/users/${params.userId}`);
         return dataFound(userResponse);
     }

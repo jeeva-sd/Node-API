@@ -1,11 +1,11 @@
 import { appConfig } from 'config';
 import { ApiResult } from './types';
-import { responseMessages, MessageStatus } from '~/constants';
+import { apiMessages, MessageStatus } from '~/constants';
 
 // Common function to build an ApiResult
 const buildApiResult = (code: number, data?: any, options?: any): ApiResult => {
-  const message = options?.message ?? responseMessages[code]?.message ?? null;
-  const status = responseMessages[code]?.status ?? MessageStatus.success;
+  const message = options?.message ?? apiMessages[code]?.message ?? null;
+  const status = apiMessages[code]?.status ?? MessageStatus.success;
   const error = options?.error ? extractErrorMessage(options?.error) : null;
 
   return {
