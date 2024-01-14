@@ -1,5 +1,5 @@
-import express, { Request, Response } from "express";
-import { Route, GetMetaData, ApiResult, serverError } from "../helpers";
+import express, { Response } from 'express';
+import { Route, GetMetaData, ApiResult, serverError, RequestX } from '.';
 
 const attachRouter = (appRoutes: any[]) => {
     return appRoutes.map((Controller) => {
@@ -18,11 +18,13 @@ const attachRouter = (appRoutes: any[]) => {
 
             // Use router.route() for route chaining
             router.route(controllerPath + route.url)
-            [routeMethod](...routeMiddleware, (req: Request, res: Response) => {
+            [routeMethod](...routeMiddleware, (req: RequestX, res: Response) => {
                 try {
                     const response = controllerInstance[methodName](req, res);
 
-                    if (route.hasOwnProperty('customResponse')) return null;
+                    if (Object.prototype.hasOwnProperty.call(route, 'customResponse')) {
+                        return null;
+                    }
                     if (!(response instanceof Promise)) return res.send(response);
 
                     response
@@ -44,27 +46,3 @@ const attachRouter = (appRoutes: any[]) => {
 };
 
 export { attachRouter };
-
-
-// Object.keys(routes).forEach((methodName: string) => {
-//     const route: Route = routes[methodName];
-//     const routeMethod = route.method;
-//     const routeMiddleware = route?.middleware || [];
-
-//     // Use router[routeMethod] instead of router.use
-//     router[routeMethod](controllerPath + route.url, ...routeMiddleware, async (req: Request, res: Response) => {
-//         try {
-//             const response = controllerInstance[methodName](req, res);
-
-//             if (route.hasOwnProperty('customResponse')) return null;
-//             if (!(response instanceof Promise)) return res.send(response);
-
-//             response.then((data: ApiResult) => {
-//                 if (data.status !== 'success') return res.status(400).send(data);
-//                 return res.send(data);
-//             });
-//         } catch (error) {
-//             res.status(500).send(serverError(error));
-//         }
-//     });
-// });

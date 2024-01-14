@@ -1,5 +1,5 @@
-import { Exception, dataFound, dbError, jsonHttp } from "../../helpers";
-import { UserRepository } from "./repository";
+import { ApiResult, Exception, dataFound, dbError, jsonHttp } from '../../helpers';
+import { UserRepository } from './repository';
 
 class UserCore {
     private userRepository;
@@ -9,7 +9,7 @@ class UserCore {
     }
 
     @Exception()
-    public async getUserList() {
+    public async getUserList(): Promise<ApiResult> {
         const userList: any = await this.userRepository.getUserList();
         if (userList.error) return dbError(userList);
 
@@ -17,7 +17,8 @@ class UserCore {
     }
 
     @Exception()
-    public async getUserById(params: any) {
+    public async getUserById(params: any): Promise<ApiResult> {
+        console.log(params)
         const userResponse = await jsonHttp.get(`/users/${params.userId}`);
         return dataFound(userResponse);
     }

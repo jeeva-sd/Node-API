@@ -1,3 +1,5 @@
+import { Request } from "express";
+
 export interface ApiResult {
   version: string;
   status: string;
@@ -9,9 +11,9 @@ export interface ApiResult {
 }
 
 export enum MessageStatus {
-  success = "success",
-  failure = "failure",
-  error = "error",
+  success = 'success',
+  failure = 'failure',
+  error = 'error',
 }
 
 export interface Message {
@@ -22,4 +24,8 @@ export interface Message {
 
 export interface Messages {
   [key: number]: Message;
+}
+
+export interface RequestX extends Request {
+  parameters?: Record<string, any>;
 }

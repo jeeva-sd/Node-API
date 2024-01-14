@@ -1,5 +1,5 @@
-import { DbException } from "../../helpers";
-import { db } from "../../database";
+import { DbException } from '../../helpers';
+import { db } from '../../database';
 
 class UserRepository {
     private static instance: UserRepository | null = null;

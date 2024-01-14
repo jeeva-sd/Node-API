@@ -1,4 +1,4 @@
-import { ExtendedConfig } from "./types";
+import { ExtendedConfig } from './types';
 
 export const fallbackEnvs: ExtendedConfig = {
     VERSION: 'v1.0.0',

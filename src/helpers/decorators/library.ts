@@ -1,13 +1,14 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
+import { RequestX, extractErrorMessage, serverError } from '../results';
 import { DbResponse, MetaData, TargetData } from './type';
-import { extractErrorMessage, serverError } from '../results/apiResult';
 
 // Define a type for middleware functions
-type MiddlewareFunction = (req: Request, res: Response, next: NextFunction) => void;
+type MiddlewareFunction = (req: RequestX, res: Response, next: NextFunction) => void;
+type ClassPrototype = Record<string, any>;
 
 // Controller decorator
 export const Controller = (controller: string, middleware?: MiddlewareFunction[]): ClassDecorator => {
-  return (target: any) => {
+  return (target: ClassPrototype) => {
     const meta = GetMetaData(target.prototype);
     meta.controller = controller;
     meta.controllerMiddleware = middleware || [];
@@ -16,7 +17,7 @@ export const Controller = (controller: string, middleware?: MiddlewareFunction[]
 
 // Method decorator for defining routes
 export const MethodDecorator = (method: string, path: string, middleware?: MiddlewareFunction[]): MethodDecorator => {
-  return (target: any, methodName: string, descriptor: PropertyDescriptor) => {
+  return (target: ClassPrototype, methodName: string, descriptor: PropertyDescriptor) => {
     const meta = GetMetaData(target);
     meta.routes[methodName] = { ...meta.routes[methodName], method, url: path, middleware };
     return descriptor;
@@ -25,7 +26,7 @@ export const MethodDecorator = (method: string, path: string, middleware?: Middl
 
 // Custom method decorator for indicating custom response handling
 export const CustomMethodDecorator = (): MethodDecorator => {
-  return (target: any, methodName: string, descriptor: PropertyDescriptor) => {
+  return (target: ClassPrototype, methodName: string, descriptor: PropertyDescriptor) => {
     const meta = GetMetaData(target);
     meta.routes[methodName] = { ...meta.routes[methodName], customResponse: true };
     return descriptor;
@@ -33,6 +34,7 @@ export const CustomMethodDecorator = (): MethodDecorator => {
 };
 
 // HTTP method decorators for common methods
+// eslint-disable-next-line 
 export const GET = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('get', path, middleware);
 export const POST = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('post', path, middleware);
 export const PUT = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('put', path, middleware);
@@ -43,10 +45,10 @@ export const CUSTOM_RESPONSE = () => CustomMethodDecorator();
 
 // GUARD decorator for error handling in methods
 export function Exception() {
-  return function (_target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (_target: ClassPrototype, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
 
-    descriptor.value = async function (...args: any[]) {
+    descriptor.value = async function (...args: ClassPrototype[]) {
       try {
         const result = await originalMethod.apply(this, args);
         return result;
@@ -61,10 +63,10 @@ export function Exception() {
 }
 
 export function DbException() {
-  return (_target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+  return (_target: ClassPrototype, propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value;
 
-    descriptor.value = async function (...args: any[]) {
+    descriptor.value = async function (...args: ClassPrototype[]) {
       try {
         const result = await originalMethod.apply(this, args);
         return { success: true, data: result, error: null } as DbResponse;
@@ -81,10 +83,10 @@ export function DbException() {
 
 // ResponseX decorator for wrapping methods with error handling
 export function ResponseX() {
-  return (_target: any, _propertyKey: string, descriptor: PropertyDescriptor) => {
+  return (_target: ClassPrototype, _propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value;
 
-    descriptor.value = async (req: Request, res: Response) => {
+    descriptor.value = async (req: RequestX, res: Response) => {
       try {
         const data = await originalMethod(req, res);
         res.send(data);
@@ -107,4 +109,4 @@ export function GetMetaData(target: TargetData): MetaData {
     };
   }
   return target.meta_data;
-};
+}

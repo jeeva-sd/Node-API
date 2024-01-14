@@ -1,6 +1,6 @@
-import { messages } from "./messages";
-import { appConfig } from "../../config";
-import { ApiResult, MessageStatus } from "./types";
+import { messages } from './messages';
+import { appConfig } from '../../config';
+import { ApiResult, MessageStatus } from './types';
 
 // Common function to build an ApiResult
 const buildApiResult = (code: number, data?: any, options?: any): ApiResult => {

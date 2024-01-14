@@ -1,6 +1,6 @@
 export interface Environment {
   [key: string]: string | undefined;
-};
+}
 
 interface AppCredential {
   VERSION: string;
@@ -45,7 +45,7 @@ export interface AppConfig {
   crypto: CryptoCredential;
   dbConnections: DbConnectionConfig;
   general: GeneralConfig;
-};
+}
 
 export interface ExtendedConfig
   extends AppCredential, DbConnectionConfig,

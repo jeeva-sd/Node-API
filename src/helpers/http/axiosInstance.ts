@@ -13,7 +13,7 @@ class Http {
         this.setupInterceptors();
     }
 
-    protected setAuthToken(token: string) {
+    protected setAuthToken(token: string): void {
         this.instance.defaults.headers.common['x-key'] = token;
     }
 

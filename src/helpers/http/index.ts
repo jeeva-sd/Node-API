@@ -1,5 +1,5 @@
-import Http from "./axiosInstance";
-import { HttpInstance } from "./type";
+import Http from './axiosInstance';
+import { HttpInstance } from './type';
 
 // Configs
 const jsonPlaceholderConfig: HttpInstance = {
