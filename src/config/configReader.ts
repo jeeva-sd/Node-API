@@ -35,4 +35,7 @@ export const appConfig: AppConfig = {
     general: {
         allowedDomains: readEnv('ALLOWED_DOMAINS', 'http://localhost:5173'),
     },
+    validation: {
+        abortEarly: readEnv('ABORT_EARLY', false)
+    }
 };

@@ -39,10 +39,16 @@ export interface DbConfig {
 export interface GeneralConfig {
   allowedDomains: string;
 }
+
+export interface ValidationConfig {
+  abortEarly: boolean;
+}
+
 export interface AppConfig {
   app: AppInfo;
   jwt: JwtConfig;
   crypto: CryptoConfig;
   database: DbConfig;
   general: GeneralConfig;
+  validation: ValidationConfig;
 }
