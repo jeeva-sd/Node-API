@@ -1,5 +1,5 @@
 import { userIdParams } from 'controllers/v1/user';
-import { dbError, dataFound, jsonHttp, Exception, ResponseX, DbResult } from 'helpers';
+import { dbError, dataFound, jsonHttp, Exception, ResponseX, DbResult } from 'utils';
 import { UserRepository } from './repository';
 
 class UserCore {

@@ -20,7 +20,7 @@
 		  "*"
 		],
 		"controller/*": ["controller/*"],
-		"helpers/*": ["helpers/*"],
+		"utils/*": ["utils/*"],
 		"core/*": ["core/*"],
 		"config/*": ["config/*"],
 		"database/*": ["database/*"],

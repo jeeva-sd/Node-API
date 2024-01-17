@@ -1,5 +1,5 @@
 import { NextFunction, Response } from 'express';
-import { RequestX } from 'helpers';
+import { RequestX } from 'utils';
 
 export type MiddlewareFunction = (
     req: RequestX,

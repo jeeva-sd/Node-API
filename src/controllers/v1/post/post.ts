@@ -1,4 +1,4 @@
-import { ResponseX, Controller, GET, RequestX, POST } from 'helpers';
+import { ResponseX, Controller, GET, RequestX, POST } from 'utils';
 import { validateParams } from 'middlewares';
 import { PostCore } from 'core/v1/post';
 import { PostParams, postByIdSchema, postIdParams, postSchema } from './schema';

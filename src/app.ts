@@ -1,8 +1,8 @@
 import express, { Response, NextFunction } from 'express';
 import path from 'path';
 import { json, urlencoded } from 'body-parser';
+import { RequestX, notFound, take } from 'utils';
 import { applicationRoutes } from './routes';
-import { RequestX, notFound, take } from 'helpers';
 import { appConfig } from 'config';
 
 export class App {

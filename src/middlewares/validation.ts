@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
 import * as yup from 'yup';
-import { RequestX, clientError } from 'helpers';
+import { RequestX, clientError } from 'utils';
 import { MiddlewareFunction } from './type';
 
 export const validateParams = (schema: yup.AnyObjectSchema): MiddlewareFunction => {

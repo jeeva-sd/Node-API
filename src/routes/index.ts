@@ -1,4 +1,4 @@
-import { attachRouter } from 'helpers';
+import { attachRouter } from 'utils';
 import { combineRoutes } from './routes';
 
 const applicationRoutes = attachRouter(combineRoutes);

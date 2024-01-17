@@ -1,4 +1,4 @@
-import { DbException, DbResult, } from 'helpers';
+import { DbException, DbResult, } from 'utils';
 import { db } from 'database';
 
 class UserRepository {

@@ -1,4 +1,4 @@
-import { DbException, DbResult } from 'helpers';
+import { DbException, DbResult } from 'utils';
 import { db } from 'database';
 import { PostParams } from 'controllers/v1/post';
 
