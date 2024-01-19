@@ -1,6 +1,6 @@
 import { serverError } from '../wrappers';
 import { GetMetaData, extractErrorMessage } from '..';
-import { ClassPrototype, DbResponse, MiddlewareFunction } from './type';
+import { ClassPrototype, RepoResult, MiddlewareFunction } from './type';
 
 // Controller decorator
 export const Controller = (controller: string, middleware?: MiddlewareFunction[]): ClassDecorator => {
@@ -66,11 +66,11 @@ export function DbException() {
       try {
         const result = await originalMethod.apply(this, args);
         const code = result?.code;
-        return { success: code ? false : true, data: result, error: null, code } as DbResponse;
+        return { success: code ? false : true, data: result, error: null, code } as RepoResult;
       } catch (err) {
         const error = extractErrorMessage(err);
         console.error(`\nError in repository at "${propertyKey}":\n${extractErrorMessage(error)}`);
-        return { success: false, data: null, error } as DbResponse;
+        return { success: false, data: null, error } as RepoResult;
       }
     };
 

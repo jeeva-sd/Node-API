@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { DbResponse } from "../decorators";
+import { RepoResult } from "../decorators";
 
 export interface RequestX extends Request {
   parameters?: any;
@@ -14,5 +14,3 @@ export interface ResponseX {
   options?: any;
   error?: any;
 }
-
-export type DbResult = DbResponse | any;

@@ -1,4 +1,4 @@
-import { dbError, dataFound, jsonHttp, Exception, ResponseX, DbResult } from 'utils';
+import { repoError, dataFound, jsonHttp, Exception, ResponseX, RepoResult } from 'utils';
 import { userIdParams } from '~/controllers/v1/user';
 import { UserRepository } from './repository';
 
@@ -11,8 +11,8 @@ class UserCore {
 
     @Exception()
     public async getUserList(): Promise<ResponseX> {
-        const userList: DbResult = await this.userRepository.getUserList();
-        if (!userList.success) return dbError(userList);
+        const userList: RepoResult = await this.userRepository.getUserList();
+        if (!userList.success) return repoError(userList);
 
         return dataFound(userList);
     }

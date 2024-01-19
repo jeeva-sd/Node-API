@@ -20,10 +20,10 @@ export interface TargetData {
     meta_data?: MetaData;
 }
 
-export type DbResponse = {
-    success: boolean;
+export type RepoResult = {
+    success?: boolean;
     data: any;
-    error: any;
+    error?: any;
     code?: number;
 };
 

@@ -1,7 +1,7 @@
 import { appConfig } from 'config';
 import { ResponseX } from './types';
 import { apiMessages, MessageStatus } from '~/constants';
-import { DbResponse, extractErrorMessage } from '..';
+import { RepoResult, extractErrorMessage } from '..';
 
 // Common function to build an ResponseX
 const buildResponseX = (code: number, data?: any, options?: any): ResponseX => {
@@ -65,7 +65,7 @@ export const dataFound = (data: any): ResponseX => {
   return buildResponseX(1000, data);
 };
 
-export const dbError = (response: DbResponse): ResponseX => {
+export const repoError = (response: RepoResult): ResponseX => {
   const code = response?.code || 1005;
   const error = response?.error || null;
   return buildResponseX(code, null, { error });

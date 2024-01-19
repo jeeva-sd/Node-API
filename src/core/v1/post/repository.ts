@@ -1,4 +1,4 @@
-import { DbException, DbResult } from 'utils';
+import { DbException, RepoResult } from 'utils';
 import { db } from '~/database';
 import { PostParams } from '~/controllers/v1/post';
 
@@ -17,27 +17,27 @@ class PostRepository {
     }
 
     @DbException()
-    public async getPostList(): Promise<DbResult> {
-        const postList = await db.post.findMany();
-        return postList;
+    public async getPostList(): Promise<RepoResult> {
+        const data = await db.post.findMany();
+        return { data };
     }
 
     @DbException()
-    public async getPostById(postId: number): Promise<DbResult> {
-        const postList = await db.post.findUnique({
+    public async getPostById(postId: number): Promise<RepoResult> {
+        const data = await db.post.findUnique({
             where: { id: postId }
         });
 
-        return postList;
+        return { data };
     }
 
     @DbException()
-    public async createPost(postData: PostParams): Promise<DbResult> {
-        const newPost = await db.post.create({
+    public async createPost(postData: PostParams): Promise<RepoResult> {
+        const data = await db.post.create({
             data: postData
         });
 
-        return newPost;
+        return { data };
     }
 }
 

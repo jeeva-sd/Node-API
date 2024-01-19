@@ -1,4 +1,4 @@
-import { DbException, DbResult, } from 'utils';
+import { DbException, RepoResult } from 'utils';
 import { db } from '~/database';
 
 class UserRepository {
@@ -16,9 +16,9 @@ class UserRepository {
     }
 
     @DbException()
-    public async getUserList(): Promise<DbResult> {
-        const userList = await db.user.count();
-        return userList;
+    public async getUserList(): Promise<RepoResult> {
+        const data = await db.user.count();
+        return { data };
     }
 }
 
