@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { Environment } from 'config';
+import { Environment } from '~/config';
 
 // Load environment variables from the corresponding .env file
 const environment = process.env.NODE_ENV || 'local';

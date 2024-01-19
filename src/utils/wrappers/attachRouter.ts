@@ -1,5 +1,10 @@
+// import express, { Response } from 'express';
+// import { Route, GetMetaData, ResponseX, serverError, RequestX } from '..';
+
 import express, { Response } from 'express';
-import { Route, GetMetaData, ResponseX, serverError, RequestX } from '..';
+import { GetMetaData, Route } from '../decorators';
+import { serverError } from './apiResult';
+import { ResponseX, RequestX } from './types';
 
 const attachRouter = (appRoutes: any[]) => {
     return appRoutes.map((Controller) => {
