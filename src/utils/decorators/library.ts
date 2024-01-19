@@ -40,41 +40,37 @@ export const DELETE = (path: string, middleware?: MiddlewareFunction[]) => Metho
 export const CUSTOM_RESPONSE = () => CustomMethodDecorator();
 
 // GUARD decorator for error handling in methods
-export function CoreGuard() {
-  return function (_target: ClassPrototype, propertyKey: string, descriptor: PropertyDescriptor) {
-    const originalMethod = descriptor.value;
+export function CoreGuard(_target: ClassPrototype, propertyKey: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
 
-    descriptor.value = async function (...args: ClassPrototype[]) {
-      try {
-        const result = await originalMethod.apply(this, args);
-        return result;
-      } catch (error) {
-        console.error(`\nError in core at "${propertyKey}":\n${extractErrorMessage(error)}`);
-        return serverError(error);
-      }
-    };
-
-    return descriptor;
+  descriptor.value = async function (...args: ClassPrototype[]) {
+    try {
+      const result = await originalMethod.apply(this, args);
+      return result;
+    } catch (error) {
+      console.error(`\nError in core at "${propertyKey}":\n${extractErrorMessage(error)}`);
+      return serverError(error);
+    }
   };
-}
 
-export function RepoGuard() {
-  return (_target: ClassPrototype, propertyKey: string, descriptor: PropertyDescriptor) => {
-    const originalMethod = descriptor.value;
+  return descriptor;
+};
 
-    descriptor.value = async function (...args: ClassPrototype[]) {
-      try {
-        const result = await originalMethod.apply(this, args);
-        const code = result?.code;
-        const data = result?.data;
-        return { success: code ? false : true, data, error: null, code } as RepoResult;
-      } catch (err) {
-        const error = extractErrorMessage(err);
-        console.error(`\nError in repository at "${propertyKey}":\n${extractErrorMessage(error)}`);
-        return { success: false, data: null, error } as RepoResult;
-      }
-    };
+export function RepoGuard(_target: ClassPrototype, propertyKey: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
 
-    return descriptor;
+  descriptor.value = async function (...args: ClassPrototype[]) {
+    try {
+      const result = await originalMethod.apply(this, args);
+      const code = result?.code;
+      const data = result?.data;
+      return { success: code ? false : true, data, error: null, code } as RepoResult;
+    } catch (err) {
+      const error = extractErrorMessage(err);
+      console.error(`\nError in repository at "${propertyKey}":\n${extractErrorMessage(error)}`);
+      return { success: false, data: null, error } as RepoResult;
+    }
   };
-}
+
+  return descriptor;
+};

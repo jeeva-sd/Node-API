@@ -16,7 +16,7 @@ class UserRepository {
         return UserRepository.instance;
     }
 
-    @RepoGuard()
+    @RepoGuard
     public async getUserList(): Promise<RepoResult<UserCount[]>> {
         const userCount = await db.user.findMany({
             select: {

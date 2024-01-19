@@ -16,13 +16,13 @@ class PostRepository {
         return PostRepository.instance;
     }
 
-    @RepoGuard()
+    @RepoGuard
     public async getPostList(): Promise<RepoResult> {
         const data = await db.post.findMany();
         return { data };
     }
 
-    @RepoGuard()
+    @RepoGuard
     public async getPostById(postId: number): Promise<RepoResult> {
         const data = await db.post.findUnique({
             where: { id: postId }
@@ -31,7 +31,7 @@ class PostRepository {
         return { data };
     }
 
-    @RepoGuard()
+    @RepoGuard
     public async createPost(postData: PostParams): Promise<RepoResult> {
         const data = await db.post.create({
             data: postData

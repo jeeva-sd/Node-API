@@ -9,7 +9,7 @@ class PostCore {
         this.postRepository = PostRepository.getInstance();
     }
 
-    @CoreGuard()
+    @CoreGuard
     public async getPostList(): Promise<ResponseX> {
         const userList: RepoResult = await this.postRepository.getPostList();
         if (!userList.success) return repoError(userList);
@@ -17,7 +17,7 @@ class PostCore {
         return dataList(userList.data);
     }
 
-    @CoreGuard()
+    @CoreGuard
     public async getPostById(params: postIdParams): Promise<ResponseX> {
         const postResult: RepoResult = await this.postRepository.getPostById(params.postId);
         if (!postResult.success) return repoError(postResult);
@@ -25,7 +25,7 @@ class PostCore {
         return dataList(postResult.data);
     }
 
-    @CoreGuard()
+    @CoreGuard
     public async createPost(params: PostParams): Promise<ResponseX> {
         const postResult: RepoResult = await this.postRepository.createPost(params);
         if (!postResult.success) return repoError(postResult);
