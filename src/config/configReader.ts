@@ -30,7 +30,7 @@ export const appConfig: AppConfig = {
         connectionLimit: readEnv('DB_CONNECTION_LIMIT', 20),
         isMultipleStatement: readEnv('DB_IS_MULTIPLE_STATEMENT', true),
         shouldWaitForConnections: readEnv('DB_SHOULD_WAIT_FOR_CONNECTIONS', false),
-        url: readEnv('DATABASE_URL', 'mysql://root:password@localhost:3306'),
+        url: readEnv('DATABASE_URL', 'mysql://root:password@localhost:3306/demo'),
     },
     general: {
         allowedDomains: readEnv('ALLOWED_DOMAINS', 'http://localhost:5173'),
