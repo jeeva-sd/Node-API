@@ -1,4 +1,4 @@
-import { ResponseX, Controller, GET, RequestX, POST } from 'utils';
+import { ResponseX, Controller, Get, RequestX, Post } from 'utils';
 import { validateParams } from '~/middlewares';
 import { PostCore } from '~/core/v1/post';
 import { PostParams, postByIdSchema, postIdParams, postSchema } from './schema';
@@ -11,17 +11,17 @@ class PostController {
         this.postCore = new PostCore();
     }
 
-    @GET('/list')
+    @Get('/list')
     public postList(): Promise<ResponseX> {
         return this.postCore.getPostList();
     }
 
-    @GET('/:postId', [validateParams(postByIdSchema)])
+    @Get('/:postId', [validateParams(postByIdSchema)])
     public postById(req: RequestX): Promise<ResponseX> {
         return this.postCore.getPostById(req.parameters as postIdParams);
     }
 
-    @POST('/', [validateParams(postSchema)])
+    @Post('/', [validateParams(postSchema)])
     public newPost(req: RequestX): Promise<ResponseX> {
         return this.postCore.createPost(req.parameters as PostParams);
     }

@@ -31,11 +31,10 @@ export const CustomMethodDecorator = (): MethodDecorator => {
 };
 
 // HTTP method decorators for common methods
-// eslint-disable-next-line 
-export const GET = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('get', path, middleware);
-export const POST = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('post', path, middleware);
-export const PUT = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('put', path, middleware);
-export const DELETE = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('delete', path, middleware);
+export const Get = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('get', path, middleware);
+export const Post = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('post', path, middleware);
+export const Put = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('put', path, middleware);
+export const Delete = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('delete', path, middleware);
 
 // Custom response decorator for handling responses
 export const CUSTOM_RESPONSE = () => CustomMethodDecorator();
