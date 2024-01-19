@@ -1,5 +1,5 @@
-import { NextFunction, Response } from "express";
-import { RequestX } from "../wrappers";
+import { NextFunction, Response } from 'express';
+import { RequestX } from '../wrappers';
 
 export interface MetaData {
     controller: string;

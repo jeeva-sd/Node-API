@@ -21,7 +21,7 @@ export class App {
             // const origin: string = req.headers.origin;
             // const allowedDomains: string[] = appConfig.general.ALLOWED_DOMAINS.split(',');
             // if (allowedDomains.includes(origin)) {
-            // res.header("Access-Control-Allow-Origin", origin);
+            // res.header('Access-Control-Allow-Origin', origin);
             // }
             // else return res.status(403).send(take(403));
 

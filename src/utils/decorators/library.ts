@@ -35,7 +35,7 @@ export function CoreGuard(_target: ClassPrototype, propertyKey: string, descript
       return result;
     } catch (err) {
       const error = extractErrorMessage(err);
-      console.error(`\nError in core at "${propertyKey}":\n${error}`);
+      console.error(`\nError in core at '${propertyKey}':\n${error}`);
       return serverError(error);
     }
   };
@@ -54,7 +54,7 @@ export function RepoGuard(_target: ClassPrototype, propertyKey: string, descript
       return { success: code ? false : true, data, error: null, code } as RepoResult;
     } catch (err) {
       const error = extractErrorMessage(err);
-      console.error(`\nError in repository at "${propertyKey}":\n${error}`);
+      console.error(`\nError in repository at '${propertyKey}':\n${error}`);
       return { success: false, data: null, error } as RepoResult;
     }
   };

@@ -31,7 +31,7 @@ export const success = (data?: any): ResponseX => {
 
 // exception
 // export const exception = (error: string | any, data?: any): ResponseX => {
-//   const message = typeof error === "string" ? error : (error.message ?? error);
+//   const message = typeof error === 'string' ? error : (error.message ?? error);
 //   return buildResponseX(1004, data, { message });
 // };
 
