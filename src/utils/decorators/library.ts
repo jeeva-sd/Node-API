@@ -12,13 +12,11 @@ export const Controller = (controller: string, middleware?: MiddlewareFunction[]
   };
 };
 
-// Custom method decorator for indicating custom response handling
-export const CustomMethodDecorator = (): MethodDecorator => {
-  return (target: ClassPrototype, methodName: string, descriptor: PropertyDescriptor) => {
-    const meta = GetMetaData(target);
-    meta.routes[methodName] = { ...meta.routes[methodName], customResponse: true };
-    return descriptor;
-  };
+// Custom response decorator for handling responses
+export const CustomResponse = (target: ClassPrototype, methodName: string, descriptor: PropertyDescriptor) => {
+  const meta = GetMetaData(target);
+  meta.routes[methodName] = { ...meta.routes[methodName], customResponse: true };
+  return descriptor;
 };
 
 // HTTP method decorators for common methods
@@ -26,9 +24,6 @@ export const Get = (path: string, middleware?: MiddlewareFunction[]) => setRoute
 export const Post = (path: string, middleware?: MiddlewareFunction[]) => setRoutes('post', path, middleware);
 export const Put = (path: string, middleware?: MiddlewareFunction[]) => setRoutes('put', path, middleware);
 export const Delete = (path: string, middleware?: MiddlewareFunction[]) => setRoutes('delete', path, middleware);
-
-// Custom response decorator for handling responses
-export const CustomResponse = () => CustomMethodDecorator();
 
 // GUARD decorator for error handling in methods
 export function CoreGuard(_target: ClassPrototype, propertyKey: string, descriptor: PropertyDescriptor) {

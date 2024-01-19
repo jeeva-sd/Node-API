@@ -1,6 +1,4 @@
 import { Request } from "express";
-import { RepoResult } from "../decorators";
-
 export interface RequestX extends Request {
   parameters?: any;
 }
