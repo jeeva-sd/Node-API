@@ -1,4 +1,4 @@
-import { GetMetaData } from './prototype';
+import { GetMetaData, setRoutes } from './prototype';
 import { serverError } from '../wrappers';
 import { extractErrorMessage } from '../common';
 import { ClassPrototype, RepoResult, MiddlewareFunction } from './type';
@@ -12,15 +12,6 @@ export const Controller = (controller: string, middleware?: MiddlewareFunction[]
   };
 };
 
-// Method decorator for defining routes
-export const MethodDecorator = (method: string, path: string, middleware?: MiddlewareFunction[]): MethodDecorator => {
-  return (target: ClassPrototype, methodName: string, descriptor: PropertyDescriptor) => {
-    const meta = GetMetaData(target);
-    meta.routes[methodName] = { ...meta.routes[methodName], method, url: path, middleware };
-    return descriptor;
-  };
-};
-
 // Custom method decorator for indicating custom response handling
 export const CustomMethodDecorator = (): MethodDecorator => {
   return (target: ClassPrototype, methodName: string, descriptor: PropertyDescriptor) => {
@@ -31,13 +22,13 @@ export const CustomMethodDecorator = (): MethodDecorator => {
 };
 
 // HTTP method decorators for common methods
-export const Get = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('get', path, middleware);
-export const Post = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('post', path, middleware);
-export const Put = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('put', path, middleware);
-export const Delete = (path: string, middleware?: MiddlewareFunction[]) => MethodDecorator('delete', path, middleware);
+export const Get = (path: string, middleware?: MiddlewareFunction[]) => setRoutes('get', path, middleware);
+export const Post = (path: string, middleware?: MiddlewareFunction[]) => setRoutes('post', path, middleware);
+export const Put = (path: string, middleware?: MiddlewareFunction[]) => setRoutes('put', path, middleware);
+export const Delete = (path: string, middleware?: MiddlewareFunction[]) => setRoutes('delete', path, middleware);
 
 // Custom response decorator for handling responses
-export const CUSTOM_RESPONSE = () => CustomMethodDecorator();
+export const CustomResponse = () => CustomMethodDecorator();
 
 // GUARD decorator for error handling in methods
 export function CoreGuard(_target: ClassPrototype, propertyKey: string, descriptor: PropertyDescriptor) {
