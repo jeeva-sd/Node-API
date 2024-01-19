@@ -21,6 +21,7 @@ export interface TargetData {
 }
 
 export type MiddlewareFunction = (req: RequestX, res: Response, next: NextFunction) => void;
+
 export type ClassPrototype = Record<string, any>;
 
 export type RepoResult<T = any> = {

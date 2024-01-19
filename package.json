@@ -1,8 +1,8 @@
 {
   "name": "node-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A Node.js API built with TypeScript and Express, using decorators for routing and organized folder structure for enhanced maintainability.",
+  "main": "server.ts",
   "scripts": {
     "lint": "eslint .",
     "format": "eslint --fix .",
@@ -12,8 +12,22 @@
     "prod": "set NODE_ENV=production && prisma generate && ts-node -r tsconfig-paths/register src/server.ts",
     "build": "tsc && tsconfig-paths build -p tsconfig.json"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Node.js",
+    "TypeScript",
+    "Express",
+    "Routing Controllers",
+    "API",
+    "Decorators",
+    "RESTful",
+    "ORM",
+    "MVC",
+    "Middleware",
+    "Folder Structure",
+    "Prisma",
+    "Database"
+  ],
+  "author": "github.com/jeeva-sd",
   "license": "ISC",
   "engines": {
     "node": ">= 14.0.0"
