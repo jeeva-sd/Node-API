@@ -1,5 +1,7 @@
-import UserController from "../controller/user";
+import UserController from '~/controllers/v1/user';
+import PostController from '~/controllers/v1/post';
 
-export const appRoutes = [
-    UserController
+export const combineRoutes = [
+    UserController,
+    PostController
 ];

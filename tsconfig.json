@@ -1,27 +1,29 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
-		"resolveJsonModule": true,
-		"esModuleInterop": true,
-		"target": "es6",
-		"noImplicitAny": true,
-		"moduleResolution": "node",
-		"sourceMap": false,
-		"experimentalDecorators": true,
-		"skipLibCheck": true,
-		"lib": [
-			"es6",
-			"dom"
+	  "module": "commonjs",
+	  "resolveJsonModule": true,
+	  "esModuleInterop": true,
+	  "target": "es6",
+	  "noImplicitAny": true,
+	  "moduleResolution": "node",
+	  "sourceMap": false,
+	  "experimentalDecorators": true,
+	  "skipLibCheck": true,
+	  "lib": [
+		"es6",
+		"dom"
+	  ],
+	  "outDir": "dist",
+	  "baseUrl": "src",
+	  "paths": {
+		"~/*": [
+		  "*"
 		],
-		"outDir": "dist",
-		"baseUrl": ".",
-		"paths": {
-			"~/*": [
-				"src/*"
-			],
-		}
+		"utils/*": ["utils/*"],
+	  },
 	},
 	"include": [
-		"src/**/*"
+	  "src/**/*"
 	]
-}
+  }
+  

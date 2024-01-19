@@ -2,18 +2,18 @@ import { PrismaClient } from '@prisma/client';
 import { PrismaClientOptions } from '@prisma/client/runtime/library';
 
 class PrismaService {
-    private static instance: PrismaService;
+    private static instanceOne: PrismaService;
     private prisma: PrismaClient;
 
     private constructor(prismaConfig: any) {
         this.prisma = new PrismaClient(prismaConfig);
     }
 
-    public static getInstance(prismaConfig?: PrismaClientOptions): PrismaService {
-        if (!PrismaService.instance) {
-            PrismaService.instance = new PrismaService(prismaConfig);
+    public static getInstanceOne(prismaConfig?: PrismaClientOptions): PrismaService {
+        if (!PrismaService.instanceOne) {
+            PrismaService.instanceOne = new PrismaService(prismaConfig);
         }
-        return PrismaService.instance;
+        return PrismaService.instanceOne;
     }
 
     public getPrisma(): PrismaClient {

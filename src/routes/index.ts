@@ -1,6 +1,6 @@
-import { attachRouter } from "./attachRouter";
-import { appRoutes } from "./routes";
+import { attachRouter } from 'utils';
+import { combineRoutes } from './routes';
 
-const applicationRoutes = attachRouter(appRoutes);
+const applicationRoutes = attachRouter(combineRoutes);
 
 export { applicationRoutes };
