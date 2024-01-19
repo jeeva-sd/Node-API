@@ -33,6 +33,16 @@ class PostRepository {
 
     @RepoGuard
     public async createPost(postData: PostParams): Promise<RepoResult> {
+        const existingPost = await db.post.findFirst({
+            where: {
+                title: {
+                    contains: postData.title
+                }
+            }
+        });
+
+        if (existingPost) return { code: 409, data: null };
+
         const data = await db.post.create({
             data: postData
         });

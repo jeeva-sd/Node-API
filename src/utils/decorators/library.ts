@@ -1,5 +1,6 @@
+import { GetMetaData } from './prototype';
 import { serverError } from '../wrappers';
-import { GetMetaData, extractErrorMessage } from '..';
+import { extractErrorMessage } from '../common';
 import { ClassPrototype, RepoResult, MiddlewareFunction } from './type';
 
 // Controller decorator
@@ -47,8 +48,9 @@ export function CoreGuard(_target: ClassPrototype, propertyKey: string, descript
     try {
       const result = await originalMethod.apply(this, args);
       return result;
-    } catch (error) {
-      console.error(`\nError in core at "${propertyKey}":\n${extractErrorMessage(error)}`);
+    } catch (err) {
+      const error = extractErrorMessage(err);
+      console.error(`\nError in core at "${propertyKey}":\n${error}`);
       return serverError(error);
     }
   };
@@ -67,7 +69,7 @@ export function RepoGuard(_target: ClassPrototype, propertyKey: string, descript
       return { success: code ? false : true, data, error: null, code } as RepoResult;
     } catch (err) {
       const error = extractErrorMessage(err);
-      console.error(`\nError in repository at "${propertyKey}":\n${extractErrorMessage(error)}`);
+      console.error(`\nError in repository at "${propertyKey}":\n${error}`);
       return { success: false, data: null, error } as RepoResult;
     }
   };
