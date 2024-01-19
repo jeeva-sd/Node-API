@@ -2,6 +2,7 @@ import http from 'http';
 import express from 'express';
 import { App } from './app';
 import { appConfig } from './config';
+import { db, dbService } from './database';
 
 class Server {
     private app: express.Express;
@@ -34,18 +35,18 @@ class Server {
 
         // handle specific listen errors with friendly messages
         switch (error.code) {
-        case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
-            process.exit(1);
-            break;
-        case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
-            process.exit(1);
-            break;
-        default:
-            console.error('Unhandled server error:', error);
-            process.exit(1);
-            break;
+            case 'EACCES':
+                console.error(bind + ' requires elevated privileges');
+                process.exit(1);
+                break;
+            case 'EADDRINUSE':
+                console.error(bind + ' is already in use');
+                process.exit(1);
+                break;
+            default:
+                console.error('Unhandled server error:', error);
+                process.exit(1);
+                break;
         }
     }
 
@@ -55,8 +56,10 @@ class Server {
         console.info('Listening on ' + bind);
     }
 
-    private shutdown(): void {
+    private shutdown() {
         console.info('Received termination signal. Closing server...');
+        dbService.kill();
+
         this.server.close((err) => {
             if (err) {
                 console.error('Error during server shutdown:', err);

@@ -8,5 +8,5 @@ const customOptions: PrismaClientOptions = {
     datasourceUrl: appConfig.database.url
 };
 
-const dbService = PrismaService.getInstanceOne(customOptions);
+export const dbService = PrismaService.getInstanceOne(customOptions);
 export const db = dbService.getPrisma();

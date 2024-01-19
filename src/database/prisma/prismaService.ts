@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { PrismaClientOptions } from '@prisma/client/runtime/library';
+import { extractErrorMessage } from 'utils';
 
 class PrismaService {
     private static instanceOne: PrismaService;
@@ -20,8 +21,12 @@ class PrismaService {
         return this.prisma;
     }
 
-    public async closePrisma(): Promise<void> {
-        await this.prisma.$disconnect();
+    public async kill(): Promise<void> {
+        try {
+            await this.prisma.$disconnect();
+        } catch (error) {
+            console.log(extractErrorMessage(error));
+        }
     }
 }
 
