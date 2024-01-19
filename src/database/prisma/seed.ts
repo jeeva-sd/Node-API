@@ -1,52 +1,97 @@
 import { PrismaClient } from '@prisma/client';
+
 const prisma = new PrismaClient();
 
-async function main() {
-    const alice = await prisma.user.upsert({
-        where: { email: 'alice@prisma.io' },
-        update: {},
-        create: {
-            email: 'alice@prisma.io',
-            name: 'Alice',
-            posts: {
-                create: {
-                    title: 'Check out Prisma with Next.js',
-                    content: 'https://www.prisma.io/nextjs',
-                    published: true,
+const seedData = [
+    {
+        user: {
+            email: 'john.doe@example.com',
+            name: 'John Doe',
+        },
+        posts: [
+            {
+                title: 'Introduction to Prisma',
+                content: 'Learn about Prisma ORM in this introductory guide.',
+                published: true,
+            },
+        ],
+    },
+    {
+        user: {
+            email: 'jane.smith@example.com',
+            name: 'Jane Smith',
+        },
+        posts: [
+            {
+                title: 'Prisma vs. TypeORM',
+                content: 'Comparing Prisma and TypeORM for database access.',
+                published: true,
+            },
+            {
+                title: 'Getting Started with GraphQL',
+                content: 'A beginner-friendly guide to GraphQL basics.',
+                published: false,
+            },
+        ],
+    },
+    {
+        user: {
+            email: 'emma.white@example.com',
+            name: 'Emma White',
+        },
+        posts: [
+            {
+                title: 'Prisma Migrations Tutorial',
+                content: 'A step-by-step guide to using Prisma Migrate.',
+                published: true,
+            },
+            {
+                title: 'Building a REST API with Express and Prisma',
+                content: 'Learn how to create a RESTful API using Express and Prisma.',
+                published: true,
+            },
+        ],
+    },
+    {
+        user: {
+            email: 'sam.jones@example.com',
+            name: 'Sam Jones',
+        },
+        posts: [
+            {
+                title: 'Prisma Client Advanced Usage',
+                content: 'Explore advanced features of Prisma Client in this tutorial.',
+                published: false,
+            },
+        ],
+    },
+];
+
+async function seedUsers() {
+    for (const userData of seedData) {
+        const user = await prisma.user.create({
+            data: userData.user,
+        });
+
+        for (const postData of userData.posts) {
+            await prisma.post.create({
+                data: {
+                    ...postData,
+                    userId: user.id,
                 },
-            },
-        },
-    });
-    const bob = await prisma.user.upsert({
-        where: { email: 'bob@prisma.io' },
-        update: {},
-        create: {
-            email: 'bob@prisma.io',
-            name: 'Bob',
-            posts: {
-                create: [
-                    {
-                        title: 'Follow Prisma on Twitter',
-                        content: 'https://twitter.com/prisma',
-                        published: true,
-                    },
-                    {
-                        title: 'Follow Nexus on Twitter',
-                        content: 'https://twitter.com/nexusgql',
-                        published: true,
-                    },
-                ],
-            },
-        },
-    });
-    console.log({ alice, bob });
+            });
+        }
+
+        console.log('User seeded:', user);
+    }
 }
-main()
-    .then(async () => {
-        await prisma.$disconnect();
+
+seedUsers()
+    .catch((error) => {
+        console.error('Error seeding users:', error);
     })
-    .catch(async (e) => {
-        console.error(e);
+    .finally(async () => {
         await prisma.$disconnect();
-        process.exit(1);
     });
+
+export default seedData;

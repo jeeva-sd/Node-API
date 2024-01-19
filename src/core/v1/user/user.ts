@@ -13,7 +13,7 @@ class UserCore {
     public async getUserList(): Promise<ResponseX> {
         const userList = await this.userRepository.getUserList();
         if (!userList.success) return repoError(userList);
-        return dataFound(userList);
+        return dataFound(userList.data);
     }
 
     @CoreGuard
