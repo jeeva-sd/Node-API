@@ -1,4 +1,4 @@
-import { repoError, dataFound, jsonHttp, Exception, ResponseX, RepoResult } from 'utils';
+import { repoError, dataFound, jsonHttp, CoreGuard, ResponseX } from 'utils';
 import { userIdParams } from '~/controllers/v1/user';
 import { UserRepository } from './repository';
 
@@ -9,15 +9,14 @@ class UserCore {
         this.userRepository = UserRepository.getInstance();
     }
 
-    @Exception()
+    @CoreGuard()
     public async getUserList(): Promise<ResponseX> {
-        const userList: RepoResult = await this.userRepository.getUserList();
+        const userList = await this.userRepository.getUserList();
         if (!userList.success) return repoError(userList);
-
         return dataFound(userList);
     }
 
-    @Exception()
+    @CoreGuard()
     public async getUserById(params: userIdParams): Promise<ResponseX> {
         const userResponse = await jsonHttp.get(`/users/${params.userId}`);
         return dataFound(userResponse);

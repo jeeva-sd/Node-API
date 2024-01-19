@@ -1,5 +1,6 @@
-import { DbException, RepoResult } from 'utils';
+import { RepoGuard, RepoResult } from 'utils';
 import { db } from '~/database';
+import { UserCount } from './type';
 
 class UserRepository {
     private static instance: UserRepository | null = null;
@@ -15,10 +16,16 @@ class UserRepository {
         return UserRepository.instance;
     }
 
-    @DbException()
-    public async getUserList(): Promise<RepoResult> {
-        const data = await db.user.count();
-        return { data };
+    @RepoGuard()
+    public async getUserList(): Promise<RepoResult<UserCount[]>> {
+        const userCount = await db.user.findMany({
+            select: {
+                id: true,
+                name: true
+            }
+        });
+
+        return { data: userCount };
     }
 }
 

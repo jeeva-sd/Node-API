@@ -1,4 +1,4 @@
-import { DbException, RepoResult } from 'utils';
+import { RepoGuard, RepoResult } from 'utils';
 import { db } from '~/database';
 import { PostParams } from '~/controllers/v1/post';
 
@@ -16,13 +16,13 @@ class PostRepository {
         return PostRepository.instance;
     }
 
-    @DbException()
+    @RepoGuard()
     public async getPostList(): Promise<RepoResult> {
         const data = await db.post.findMany();
         return { data };
     }
 
-    @DbException()
+    @RepoGuard()
     public async getPostById(postId: number): Promise<RepoResult> {
         const data = await db.post.findUnique({
             where: { id: postId }
@@ -31,7 +31,7 @@ class PostRepository {
         return { data };
     }
 
-    @DbException()
+    @RepoGuard()
     public async createPost(postData: PostParams): Promise<RepoResult> {
         const data = await db.post.create({
             data: postData

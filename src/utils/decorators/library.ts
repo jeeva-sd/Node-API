@@ -40,7 +40,7 @@ export const DELETE = (path: string, middleware?: MiddlewareFunction[]) => Metho
 export const CUSTOM_RESPONSE = () => CustomMethodDecorator();
 
 // GUARD decorator for error handling in methods
-export function Exception() {
+export function CoreGuard() {
   return function (_target: ClassPrototype, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
 
@@ -58,7 +58,7 @@ export function Exception() {
   };
 }
 
-export function DbException() {
+export function RepoGuard() {
   return (_target: ClassPrototype, propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value;
 
@@ -66,7 +66,8 @@ export function DbException() {
       try {
         const result = await originalMethod.apply(this, args);
         const code = result?.code;
-        return { success: code ? false : true, data: result, error: null, code } as RepoResult;
+        const data = result?.data;
+        return { success: code ? false : true, data, error: null, code } as RepoResult;
       } catch (err) {
         const error = extractErrorMessage(err);
         console.error(`\nError in repository at "${propertyKey}":\n${extractErrorMessage(error)}`);

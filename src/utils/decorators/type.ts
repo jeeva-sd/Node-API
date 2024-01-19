@@ -20,12 +20,12 @@ export interface TargetData {
     meta_data?: MetaData;
 }
 
-export type RepoResult = {
+export type MiddlewareFunction = (req: RequestX, res: Response, next: NextFunction) => void;
+export type ClassPrototype = Record<string, any>;
+
+export type RepoResult<T = any> = {
     success?: boolean;
-    data: any;
+    data: T;
     error?: any;
     code?: number;
 };
-
-export type MiddlewareFunction = (req: RequestX, res: Response, next: NextFunction) => void;
-export type ClassPrototype = Record<string, any>;
