@@ -19,13 +19,7 @@
 		"~/*": [
 		  "*"
 		],
-		"controller/*": ["controller/*"],
 		"utils/*": ["utils/*"],
-		"core/*": ["core/*"],
-		"config/*": ["config/*"],
-		"database/*": ["database/*"],
-		"middleware/*": ["middleware/*"],
-		"routes/*": ["routes/*"]
 	  },
 	},
 	"include": [

@@ -1,6 +1,6 @@
 import { PrismaClientOptions } from '@prisma/client/runtime/library';
+import { appConfig } from '~/config';
 import PrismaService from './prisma/prismaService';
-import { appConfig } from 'config';
 
 const customOptions: PrismaClientOptions = {
     log: ['info', 'warn'/*, 'error' , 'query' */],

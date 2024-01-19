@@ -1,5 +1,5 @@
 import { dbError, Exception, ResponseX, DbResult, dataList, take } from 'utils';
-import { PostParams, postIdParams } from 'controllers/v1/post';
+import { PostParams, postIdParams } from '~/controllers/v1/post';
 import { PostRepository } from './repository';
 
 class PostCore {

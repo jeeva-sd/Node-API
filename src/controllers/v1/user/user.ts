@@ -1,6 +1,6 @@
 import { ResponseX, Controller, GET, RequestX } from 'utils';
-import { validateParams } from 'middlewares';
-import { UserCore } from 'core/v1/user';
+import { validateParams } from '~/middlewares';
+import { UserCore } from '~/core/v1/user';
 import { userByIdSchema, userIdParams } from './schema';
 
 @Controller('/user')

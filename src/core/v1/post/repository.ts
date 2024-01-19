@@ -1,6 +1,6 @@
 import { DbException, DbResult } from 'utils';
-import { db } from 'database';
-import { PostParams } from 'controllers/v1/post';
+import { db } from '~/database';
+import { PostParams } from '~/controllers/v1/post';
 
 class PostRepository {
     private static instance: PostRepository | null = null;
