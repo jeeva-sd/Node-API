@@ -1,4 +1,4 @@
-import { ClassPrototype, MetaData, MiddlewareFunction, TargetData } from './type';
+import { ClassPrototype, MetaData, MiddlewareFunction, TargetData } from './types';
 
 export function GetMetaData(target: TargetData): MetaData {
     if (!target.meta_data) {

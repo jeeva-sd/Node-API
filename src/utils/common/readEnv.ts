@@ -14,7 +14,7 @@ const readEnv = (name: string, fallback: any) => {
 
     if (typeof value === 'undefined') return fallback;
     if (typeof fallback === 'number') return parseInt(value) ? parseInt(value) : fallback;
-    if (typeof fallback === 'boolean') return value === 'true' ? true : false;
+    if (typeof fallback === 'boolean') return Boolean(value);
 
     return value;
 };

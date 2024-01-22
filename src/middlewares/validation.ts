@@ -2,7 +2,7 @@ import { NextFunction, Response } from 'express';
 import * as yup from 'yup';
 import { RequestX, clientError } from 'utils';
 import { appConfig } from '~/config';
-import { MiddlewareFunction } from './type';
+import { MiddlewareFunction } from './types';
 
 export const validateParams = (schema: yup.AnyObjectSchema): MiddlewareFunction => {
     return async (req: RequestX, res: Response, next: NextFunction): Promise<void> => {

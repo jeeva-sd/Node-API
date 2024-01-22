@@ -1,4 +1,4 @@
-import { Message, MessageStatus } from './type';
+import { Message, MessageStatus } from './types';
 
 export const apiMessages: { [key: number]: Message; } = {
     // Successful

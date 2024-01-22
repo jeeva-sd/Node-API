@@ -1,7 +1,7 @@
 import { GetMetaData, setRoutes } from './prototype';
 import { serverError } from '../wrappers';
 import { extractErrorMessage } from '../common';
-import { ClassPrototype, RepoResult, MiddlewareFunction } from './type';
+import { ClassPrototype, RepoResult, MiddlewareFunction } from './types';
 
 // Controller decorator
 export const Controller = (controller: string, middleware?: MiddlewareFunction[]): ClassDecorator => {
