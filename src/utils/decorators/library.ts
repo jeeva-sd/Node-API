@@ -51,7 +51,9 @@ export function RepoGuard(_target: ClassPrototype, propertyKey: string, descript
       const result = await originalMethod.apply(this, args);
       const code = result?.code;
       const data = result?.data;
-      return { success: code ? false : true, data, error: null, code } as RepoResult;
+      const success = code ? false : result.hasOwnProperty('success') ? result.success : true;
+
+      return { success, data, error: null, code } as RepoResult;
     } catch (err) {
       const error = extractErrorMessage(err);
       console.error(`\nError in repository at '${propertyKey}':\n${error}`);

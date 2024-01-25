@@ -18,14 +18,14 @@ class UserRepository {
 
     @RepoGuard
     public async getUserList(): Promise<RepoResult<UserCount[]>> {
-        const userCount = await db.user.findMany({
+        const userList = await db.user.findMany({
             select: {
                 id: true,
                 name: true
             }
         });
 
-        return { data: userCount };
+        return { data: userList };
     }
 }
 
