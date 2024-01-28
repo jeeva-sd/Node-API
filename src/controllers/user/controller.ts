@@ -1,7 +1,7 @@
 import { ResponseX, Controller, Get, RequestX } from 'utils';
-import { validateParams } from '~/middlewares';
+import { validate } from '~/middlewares';
 import { UserCore } from '~/core/user';
-import { userByIdSchema } from './validation';
+import { user_userId } from './validation';
 
 @Controller('/user')
 class UserController {
@@ -16,7 +16,7 @@ class UserController {
         return this.userCore.getUserList();
     }
 
-    @Get('/:userId', [validateParams(userByIdSchema)])
+    @Get('/:userId', [validate(user_userId)])
     public userById(req: RequestX): Promise<ResponseX> {
         return this.userCore.getUserById(req.parameters);
     }

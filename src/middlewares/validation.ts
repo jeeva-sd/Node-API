@@ -4,7 +4,7 @@ import { RequestX, clientError } from 'utils';
 import { appConfig } from '~/config';
 import { MiddlewareFunction } from './types';
 
-export const validateParams = (schema: yup.AnyObjectSchema): MiddlewareFunction => {
+export const validate = (schema: yup.AnyObjectSchema): MiddlewareFunction => {
     return async (req: RequestX, res: Response, next: NextFunction): Promise<void> => {
         try {
             const params = { ...req.body, ...req.params, ...req.query };

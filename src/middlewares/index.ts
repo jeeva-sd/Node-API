@@ -1,1 +1,1 @@
-export { validateParams } from './validation';
+export { validate } from './validation';

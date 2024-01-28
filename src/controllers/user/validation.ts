@@ -4,6 +4,6 @@ export interface IPostId {
     userId: number;
 }
 
-export const userByIdSchema = yup.object({
+export const user_userId = yup.object({
     userId: yup.number().positive().integer(),
 });

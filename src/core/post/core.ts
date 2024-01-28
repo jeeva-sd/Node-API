@@ -1,5 +1,5 @@
 import { repoError, CoreGuard, ResponseX, RepoResult, dataList, take } from 'utils';
-import { PostParams, postIdParams } from '~/controllers/post';
+import { INewPost, IPostId } from '~/controllers/post';
 import { PostRepository } from './repository';
 
 class PostCore {
@@ -18,7 +18,7 @@ class PostCore {
     }
 
     @CoreGuard
-    public async getPostById(params: postIdParams): Promise<ResponseX> {
+    public async getPostById(params: IPostId): Promise<ResponseX> {
         const postResult: RepoResult = await this.postRepository.getPostById(params.postId);
         if (!postResult.success) return repoError(postResult);
 
@@ -26,7 +26,7 @@ class PostCore {
     }
 
     @CoreGuard
-    public async createPost(params: PostParams): Promise<ResponseX> {
+    public async createPost(params: INewPost): Promise<ResponseX> {
         const postResult: RepoResult = await this.postRepository.createPost(params);
         if (!postResult.success) return repoError(postResult);
 

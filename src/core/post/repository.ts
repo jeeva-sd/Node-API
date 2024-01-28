@@ -1,5 +1,5 @@
 import { RepoGuard, RepoResult } from 'utils';
-import { PostParams } from '~/controllers/post';
+import { INewPost } from '~/controllers/post';
 import { db } from '~/services';
 
 class PostRepository {
@@ -32,7 +32,7 @@ class PostRepository {
     }
 
     @RepoGuard
-    public async createPost(postData: PostParams): Promise<RepoResult> {
+    public async createPost(postData: INewPost): Promise<RepoResult> {
         const existingPost = await db.post.findFirst({
             where: {
                 title: {
