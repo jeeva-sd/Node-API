@@ -1,4 +1,4 @@
-import axiosService from './axiosService';
+import axiosService from './service';
 import { HttpInstance } from './types';
 
 // Configs

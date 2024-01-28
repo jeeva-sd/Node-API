@@ -1,6 +1,6 @@
 import { RepoGuard, RepoResult } from 'utils';
-import { db } from '~/database';
 import { PostParams } from '~/controllers/post';
+import { db } from '~/services';
 
 class PostRepository {
     private static instance: PostRepository | null = null;

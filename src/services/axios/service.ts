@@ -26,7 +26,7 @@ class AxiosService {
         return this.instance;
     }
 
-    protected setAuthToken(token: string): void {
+    public setAuthToken(token: string): void {
         this.axiosInstance.defaults.headers.common['x-key'] = token;
     }
 

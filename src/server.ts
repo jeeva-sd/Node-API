@@ -2,7 +2,7 @@ import http from 'http';
 import express from 'express';
 import { App } from './app';
 import { appConfig } from './config';
-import { dbService } from './database';
+import { dbService } from './services';
 
 class Server {
     private app: express.Express;

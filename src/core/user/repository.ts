@@ -1,6 +1,6 @@
 import { RepoGuard, RepoResult } from 'utils';
-import { db } from '~/database';
 import { UserCount } from './types';
+import { db } from '~/services';
 
 class UserRepository {
     private static instance: UserRepository | null = null;
