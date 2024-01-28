@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-export interface userIdParams {
+export interface IPostId {
     userId: number;
 }
 

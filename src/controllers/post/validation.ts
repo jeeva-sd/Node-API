@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-export interface postIdParams {
+export interface IPostId {
     postId: number;
 }
 
@@ -8,7 +8,7 @@ export const postByIdSchema = yup.object({
     postId: yup.number().positive().integer(),
 });
 
-export interface PostParams {
+export interface INewPost {
     id?: number;
     title: string;
     content: string;

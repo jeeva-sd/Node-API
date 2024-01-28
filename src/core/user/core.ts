@@ -1,5 +1,5 @@
 import { repoError, dataFound, CoreGuard, ResponseX, dataList } from 'utils';
-import { userIdParams } from '~/controllers/user';
+import { IPostId } from '~/controllers/user';
 import { jsonHttp } from '~/services';
 import { UserRepository } from './repository';
 
@@ -18,7 +18,7 @@ class UserCore {
     }
 
     @CoreGuard
-    public async getUserById(params: userIdParams): Promise<ResponseX> {
+    public async getUserById(params: IPostId): Promise<ResponseX> {
         const userResponse = await jsonHttp.get(`/users/${params.userId}`);
         return dataFound(userResponse);
     }

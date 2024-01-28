@@ -1,7 +1,7 @@
 import { ResponseX, Controller, Get, RequestX, Post } from 'utils';
 import { validateParams } from '~/middlewares';
 import { PostCore } from '~/core/post';
-import { PostParams, postByIdSchema, postIdParams, postSchema } from './schema';
+import { PostParams, postByIdSchema, postIdParams, postSchema } from './validation';
 
 @Controller('/post')
 class PostController {
