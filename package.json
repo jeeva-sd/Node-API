@@ -7,11 +7,14 @@
     "lint": "eslint .",
     "format": "eslint --fix .",
     "seed": "npx prisma db seed",
-    "predev": "rm -rf node_modules/.prisma && prisma generate",
-    "dev": "nodemon -r tsconfig-paths/register src/server.ts",
+    "migrate:dev": "dotenv -e .dev.env -- npx prisma db push",
+    "migrate:stage": "dotenv -e .stage.env -- npx prisma db push",
+    "migrate:prod": "dotenv -e .prod.env -- npx prisma db push",
+    "predev": "rimraf node_modules/.prisma && prisma generate",
+    "dev": "cross-env NODE_ENV=dev nodemon -r tsconfig-paths/register src/server.ts",
     "start": "ts-node -r tsconfig-paths/register src/server.ts",
-    "prod": "set NODE_ENV=production && prisma generate && ts-node -r tsconfig-paths/register src/server.ts",
-    "build": "tsc && tsconfig-paths build -p tsconfig.json"
+    "prod": "cross-env NODE_ENV=prod && prisma generate && ts-node -r tsconfig-paths/register src/server.ts",
+    "build": "tsc && npx tsconfig-paths build -p tsconfig.json"
   },
   "keywords": [
     "Node.js",
@@ -35,7 +38,7 @@
   },
   "prisma": {
     "schema": "./src/database/db1/schema.prisma",
-    "seed": "ts-node ./src/database/db1/seed.ts"
+    "seed": "dotenv -e .dev.env -- ts-node -r tsconfig-paths/register ./src/database/db1/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.7.1",
@@ -49,6 +52,8 @@
     "@types/node": "^20.10.2",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
+    "cross-env": "^7.0.3",
+    "dotenv-cli": "^7.3.0",
     "eslint": "^8.56.0",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.1",
