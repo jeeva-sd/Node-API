@@ -15,3 +15,9 @@ export function extractErrorMessage(error: any): string | null | string[] {
     }
     else return error?.toString?.() || null;
 }
+
+export function exeLog(error: any): Error {
+    const err = extractErrorMessage(error);
+    console.log(err);
+    throw new Error(err as string);
+}

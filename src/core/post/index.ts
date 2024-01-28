@@ -1,2 +1,2 @@
-export * from './post';
+export * from './core';
 export * from './repository';

@@ -1,5 +1,6 @@
-import { repoError, dataFound, jsonHttp, CoreGuard, ResponseX, dataList } from 'utils';
-import { userIdParams } from '~/controllers/v1/user';
+import { repoError, dataFound, CoreGuard, ResponseX, dataList } from 'utils';
+import { userIdParams } from '~/controllers/user';
+import { jsonHttp } from '~/services';
 import { UserRepository } from './repository';
 
 class UserCore {

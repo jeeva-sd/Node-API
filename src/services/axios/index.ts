@@ -1,4 +1,4 @@
-import Http from './axiosInstance';
+import axiosService from './axiosService';
 import { HttpInstance } from './types';
 
 // Configs
@@ -8,6 +8,6 @@ const jsonPlaceholderConfig: HttpInstance = {
 };
 
 // Instances
-const jsonHttp = new Http(jsonPlaceholderConfig);
+const jsonHttp = axiosService.getInstance(jsonPlaceholderConfig);
 
 export { jsonHttp };

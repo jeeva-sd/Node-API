@@ -1,2 +1,2 @@
-export { UserCore } from './user';
+export { UserCore } from './core';
 export { UserRepository } from './repository';

@@ -1,5 +1,5 @@
 import { repoError, CoreGuard, ResponseX, RepoResult, dataList, take } from 'utils';
-import { PostParams, postIdParams } from '~/controllers/v1/post';
+import { PostParams, postIdParams } from '~/controllers/post';
 import { PostRepository } from './repository';
 
 class PostCore {
