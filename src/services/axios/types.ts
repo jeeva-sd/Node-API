@@ -1,4 +1,4 @@
-export interface HttpInstance {
+export interface AxiosConfig {
     baseURL: string;
     timeOut: number;
 }

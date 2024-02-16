@@ -1,6 +1,6 @@
 import { PrismaClientOptions } from '@prisma/client/runtime/library';
-import { appConfig } from '~/config';
-import PrismaService from './service';
+import { PrismaService } from './prisma.service';
+import { appConfig } from '@/config';
 
 const dbOptions: PrismaClientOptions = {
     log: ['info', 'warn'/*, 'error' , 'query' */],
@@ -8,5 +8,5 @@ const dbOptions: PrismaClientOptions = {
     datasourceUrl: appConfig.database.url
 };
 
-export const dbService = PrismaService.getInstanceOne(dbOptions);
+export const dbService = PrismaService.getInstance(dbOptions);
 export const db = dbService.getPrisma();

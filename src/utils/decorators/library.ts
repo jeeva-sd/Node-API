@@ -1,4 +1,5 @@
 import { GetMetaData, setRoutes } from './prototype';
+import * as yup from 'yup';
 import { serverError } from '../wrappers';
 import { extractErrorMessage } from '../common';
 import { ClassPrototype, RepoResult, MiddlewareFunction } from './types';
@@ -24,6 +25,23 @@ export const Get = (path: string, middleware?: MiddlewareFunction[]) => setRoute
 export const Post = (path: string, middleware?: MiddlewareFunction[]) => setRoutes('post', path, middleware);
 export const Put = (path: string, middleware?: MiddlewareFunction[]) => setRoutes('put', path, middleware);
 export const Delete = (path: string, middleware?: MiddlewareFunction[]) => setRoutes('delete', path, middleware);
+
+export const Apply = (routeMiddleware: MiddlewareFunction | MiddlewareFunction[]): MethodDecorator => {
+  return (target: ClassPrototype, methodName: string, descriptor: PropertyDescriptor) => {
+    const meta = GetMetaData(target);
+    const middleware = Array.isArray(routeMiddleware) ? routeMiddleware : [routeMiddleware];
+    meta.routes[methodName] = { ...meta.routes[methodName], middleware };
+    return descriptor;
+  };
+};
+
+export const Sanitize = (schema: yup.Schema<any>) => {
+  return (target: ClassPrototype, methodName: string, descriptor: PropertyDescriptor) => {
+    const meta = GetMetaData(target);
+    meta.routes[methodName] = { ...meta.routes[methodName], sanitizeSchema: schema };
+    return descriptor;
+  };
+};
 
 // GUARD decorator for error handling in methods
 export function CoreGuard(_target: ClassPrototype, propertyKey: string, descriptor: PropertyDescriptor) {

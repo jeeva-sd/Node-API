@@ -14,7 +14,7 @@
     "rules": {
         "semi": ["warn", "always"],
         "quotes": ["warn", "single"],
-        "max-len": ["warn", { "code": 100 }],
+        "max-len": ["warn", { "code": 120 }],
         "no-multiple-empty-lines": ["warn", { "max": 1 }],
         "no-unused-vars": "warn",                   // unused variables
         "no-empty": "warn",                         // empty blocks
@@ -30,7 +30,7 @@
         "key-spacing": "warn",                      // spacing around object keys
         "no-console": ["warn", { "allow": ["warn", "error"] }]
     },
-    "ignorePatterns": ["node_modules/", "dist/", "utils", "database", "apiMessages.ts", "server.ts", "axios"],
+    "ignorePatterns": ["node_modules/", "dist/", "utils", "database", "messages.ts", "server.ts", "axios"],
     "overrides": [
       {
         "files": [ "**/*.ts" ],

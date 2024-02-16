@@ -5,15 +5,16 @@ export interface MetaData {
     controller: string;
     controllerMiddleware: any;
     routes: {
-        [key: string]: Route;
+        [key: string]: CustomRoute;
     };
 }
 
-export interface Route {
+export interface CustomRoute {
     method: string;
     url: string;
     middleware?: any;
     customResponse?: boolean;
+    sanitizeSchema: null | any;
 }
 
 export interface TargetData {
@@ -26,7 +27,7 @@ export type ClassPrototype = Record<string, any>;
 
 export type RepoResult<T = any> = {
     success?: boolean;
-    data: T;
+    data?: T;
     error?: any;
     code?: number;
 };

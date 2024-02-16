@@ -1,9 +1,10 @@
 import express, { Response, NextFunction } from 'express';
 import path from 'path';
 import { json, urlencoded } from 'body-parser';
-import { RequestX, notFound, take } from 'utils';
-import { applicationRoutes } from './routes';
-import { appConfig } from '~/config';
+import cookieParser from 'cookie-parser';
+import { RequestX, attachRouter, notFound, take } from './utils';
+import { appControllers } from '~/controllers';
+import { appConfig } from '@/config';
 
 export class App {
     public app: express.Express;
@@ -16,19 +17,26 @@ export class App {
     }
 
     private middlewareHandler(): void {
-        this.app.all('/*', (req: RequestX, res: Response, next: NextFunction) => {
-            // For CORS
-            // const origin: string = req.headers.origin;
-            // const allowedDomains: string[] = appConfig.general.ALLOWED_DOMAINS.split(',');
-            // if (allowedDomains.includes(origin)) {
-            // res.header('Access-Control-Allow-Origin', origin);
-            // }
-            // else return res.status(403).send(take(403));
 
-            res.header('Access-Control-Allow-Origin', '*');
+        this.app.all('/*', (req: RequestX, res: Response, next: NextFunction) => {
+            const origin: string = req.headers.origin;
+
+            // For CORS
+            if (appConfig.app.environment === 'dev') {
+                res.header('Access-Control-Allow-Origin', '*');
+            }
+            else {
+                const allowedDomains: string[] = appConfig.general.allowedDomains.split(',');
+                if (allowedDomains.includes(origin)) {
+                    res.header('Access-Control-Allow-Origin', origin);
+                }
+                else return res.status(403).send(take(403));
+            }
+
+            res.header('Access-Control-Allow-Credentials', 'true');
             res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
             res.header('Access-Control-Allow-Headers',
-                'Content-Type, Accept, X-Access-Token, Authorization, X-Key');
+                'Content-Type, Accept, X-Key, Set-Cookie');
 
             // Handle preflight requests
             if (req.method === 'OPTIONS') return res.status(200).end();
@@ -38,6 +46,7 @@ export class App {
         this.app.use(json({ limit: '50mb' }));
         this.app.use(urlencoded({ limit: '50mb', extended: true }));
         this.app.use(express.static(path.join(__dirname, 'public')));
+        this.app.use(cookieParser());
     }
 
     private routeHandler(): void {
@@ -57,7 +66,8 @@ export class App {
     }
 
     private combineRoutes(): void {
-        this.app.use('/api/v1', applicationRoutes);
+        const appRoutes = attachRouter(appControllers);
+        this.app.use('/api/v1', appRoutes);
     }
 
     private errorHandler(): void {

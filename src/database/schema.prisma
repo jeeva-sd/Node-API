@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  orgId     String?
+  branchId  String?
+  name      String
+  password  String
+  roleId    Int
+  statusId  Int      @default(1)
+  phone     String
+  email     String?
+  dayRate   Int      @default(0)
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @updatedAt
+
+  role                    Role           @relation(fields: [roleId], references: [id])
+  status                  Status         @relation(fields: [statusId], references: [id])
+
+  @@index([phone], name: "idx_user_phone")
+  @@index([createdAt], name: "idx_user_createdAt")
+  @@index([createdBy], name: "idx_user_createdBy")
+  @@map("user")
+}
+
+model Status {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userList         User[]
+
+  @@index([name], name: "idx_status_name")
+  @@index([createdAt], name: "idx_status_createdAt")
+  @@map("status")
+}
+
+model Role {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userList User[]
+
+  @@index([name], name: "idx_role_name")
+  @@index([createdAt], name: "idx_role_createdAt")
+  @@map("role")
+}

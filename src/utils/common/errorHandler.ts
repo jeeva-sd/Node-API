@@ -1,10 +1,8 @@
-export function extractErrorMessage(error: any): string | null | string[] {
+export function extractErrorMessage(error: any): string | null {
     if (typeof error === 'string') return error;
     else if (Array.isArray(error)) {
         if (error?.length === 0) return null;
-        else if (error.length === 1) return error[0];
-
-        return error;
+        return error[0];
     }
     else if (error instanceof Error) return error.message;
     else if (typeof error === 'object') {

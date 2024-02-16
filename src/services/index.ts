@@ -1,4 +1,2 @@
-export { db, dbService } from './prisma';
-
-// http
-export { jsonHttp } from './axios';
+export * from './prisma';
+export * from './axios';

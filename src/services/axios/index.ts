@@ -1,13 +1,13 @@
-import axiosService from './service';
-import { HttpInstance } from './types';
+import { AxiosService } from './axios.service';
+import { AxiosConfig } from './types';
 
 // Configs
-const jsonPlaceholderConfig: HttpInstance = {
+const jsonPlaceholderConfig: AxiosConfig = {
     baseURL: 'https://jsonplaceholder.typicode.com',
     timeOut: 20000
 };
 
 // Instances
-const jsonHttp = axiosService.getInstance(jsonPlaceholderConfig);
+const jsonHttp = AxiosService.getInstance(jsonPlaceholderConfig);
 
 export { jsonHttp };

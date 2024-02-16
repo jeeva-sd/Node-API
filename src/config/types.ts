@@ -40,15 +40,22 @@ export interface GeneralConfig {
   allowedDomains: string;
 }
 
-export interface ValidationConfig {
+export interface IValidationConfig {
   abortEarly: boolean;
 }
 
+export interface CookieConfig {
+  httpOnly: boolean;
+  secure: boolean;
+  expire: number;
+  sameSite: boolean;
+}
 export interface AppConfig {
   app: AppInfo;
   jwt: JwtConfig;
   crypto: CryptoConfig;
   database: DbConfig;
   general: GeneralConfig;
-  validation: ValidationConfig;
+  validation: IValidationConfig;
+  cookie: CookieConfig;
 }

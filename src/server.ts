@@ -1,7 +1,7 @@
 import http from 'http';
 import express from 'express';
 import { App } from './app';
-import { appConfig } from './config';
+import { appConfig } from '@/config';
 import { dbService } from './services';
 
 class Server {
@@ -56,9 +56,9 @@ class Server {
         console.info('Listening on ' + bind);
     }
 
-    private shutdown() {
+    private async shutdown() {
         console.info('Received termination signal. Closing server...');
-        dbService.kill();
+        await dbService.kill();
 
         this.server.close((err) => {
             if (err) {

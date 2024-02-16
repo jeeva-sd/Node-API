@@ -1,12 +1,12 @@
-import { readEnv } from 'utils';
+import { readEnv } from '@/utils';
 import { AppConfig } from './types';
 
 export const appConfig: AppConfig = {
     app: {
-        version: readEnv('VERSION', 'v1.0'),
+        version: readEnv('VERSION', 'v1.0.0'),
         name: readEnv('APP_NAME', 'Node-API'),
         port: readEnv('PORT', 1314),
-        environment: readEnv('NODE_ENV', 'local'),
+        environment: readEnv('NODE_ENV', 'dev'),
     },
     jwt: {
         accessSecretKey: readEnv('JWT_ACCESS_SECRET_KEY', 'default-access-secret'),
@@ -35,7 +35,13 @@ export const appConfig: AppConfig = {
     general: {
         allowedDomains: readEnv('ALLOWED_DOMAINS', 'http://localhost:5173'),
     },
+    cookie: {
+        httpOnly: readEnv('COOKIE_HTTP_ONLY', false),
+        secure: readEnv('SECURE_COOKIE', false),
+        expire: readEnv('COOKIE_MAX_AGE', 60 * 60 * 24 * 7),
+        sameSite: readEnv('SAME_SITE_COOKIE', 'none'),
+    },
     validation: {
-        abortEarly: readEnv('ABORT_EARLY', false)
+        abortEarly: readEnv('ABORT_EARLY', true)
     }
 };
